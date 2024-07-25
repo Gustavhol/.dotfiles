@@ -14,16 +14,52 @@
     ];
 
 
-  networking.hostName = "starlite"; # Define your hostname.
+  # networking.hostName = "starlite"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    networking = {
+    hostName = "starlite"; # Define your hostname.
+    firewall = { 
+      enable = true;
+      allowedTCPPortRanges = [ 
+        { from = 1714; to = 1764; } # KDE Connect
+      ];  
+      allowedUDPPortRanges = [ 
+        { from = 1714; to = 1764; } # KDE Connect
+      ];  
+    };   
+  };
 
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
+    # Enable automatic login for the user.
+  # services.xserver.displayManager.autoLogin.enable = true;
+  # services.xserver.displayManager.autoLogin.user = "gustav";
+
+  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
+
+  services = {
+    xserver = {
+      enable = true;
+      libinput.enable = true;
+      displayManager = {
+        gdm.enable = true;
+        gnome.enable = true;
+        autoLogin = {
+          enable = true;
+          user = "gustav";
+        };
+      };
+    };
+    printing.enable = true;
+  };
+       
   # Remove some GNOME default packages
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
@@ -37,7 +73,7 @@
     geary # email reader
     evince # document viewer
     gnome-characters
-    # totem # video player
+    totem # video player
     tali # poker game
     iagno # go game
     hitori # sudoku game
@@ -46,7 +82,7 @@
   ]);
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # services.printing.enable = true;
 
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -61,6 +97,7 @@
     vscode
     gnomeExtensions.appindicator # tray icon
     gnomeExtensions.screen-rotate # see https://www.reddit.com/r/starlabs_computers/comments/1dyebde/starlite_mkv_autorotate_solution/
+    
   ];
 
 

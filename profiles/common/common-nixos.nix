@@ -14,7 +14,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 3;
+  boot.loader.timeout = 7;
 
   systemd.services.NetworkManager-wait-online.enable = false;
  
@@ -73,6 +73,7 @@
      docker-compose
      ffmpeg
      flatpak
+     fzf
      git
      gotop
      htop
