@@ -102,9 +102,9 @@
             };
     in {
       nixosConfigurations = {
-        desktop = nixosSystem "x86_64-linux" "elitedesk" "gustav";
+        elitedesk = nixosSystem "x86_64-linux" "elitedesk" "gustav";
         starlite = nixosSystem "x86_64-linux" "starlite" "gustav";
-        laptop = nixosSystem "x86_64-linux" "probook" "gustav";
+        probook = nixosSystem "x86_64-linux" "probook" "gustav";
       };
       homeConfigurations = {
         gustav = home-manager.lib.homeManagerConfiguration {

@@ -12,6 +12,7 @@
     ./app/alacritty.nix
     ./app/git.nix
     ./app/nixvim.nix
+    ./app/zsh.nix
   ];
 
   # colorScheme = nix-colors.colorSchemes.onedark;
@@ -64,18 +65,18 @@
     home-manager = {
       enable = true;
     };
-    zsh = {
-      enable = true;
-      shellAliases = {
-        ls = "${pkgs.eza}/bin/eza --icons -l -T -L=1 --group-directories-first";
-        la = "${pkgs.eza}/bin/eza --icons -l -a -h -T -L=1 --group-directories-first";
-        tree = "${pkgs.eza}/bin/eza --color=auto --tree";
-        grep = "grep --color=auto";
-        ":q" = "exit";
-        hmsf = "home-manager switch --flake .#user";
-        nrsf = "sudo nixos-rebuild switch --flake .#desktop";
-      };
-    };
+    # zsh = {
+    #   enable = true;
+    #   shellAliases = {
+    #     ls = "${pkgs.eza}/bin/eza --icons -l -T -L=1 --group-directories-first";
+    #     la = "${pkgs.eza}/bin/eza --icons -l -a -h -T -L=1 --group-directories-first";
+    #     tree = "${pkgs.eza}/bin/eza --color=auto --tree";
+    #     grep = "grep --color=auto";
+    #     ":q" = "exit";
+    #     hmsf = "home-manager switch --flake .#user";
+    #     nrsf = "sudo nixos-rebuild switch --flake .#desktop";
+    #   };
+    # };
     starship = {
       enable = true;
       enableZshIntegration = true;
