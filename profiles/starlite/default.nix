@@ -50,12 +50,12 @@
       libinput.enable = true;
       displayManager = {
         gdm.enable = true;
-        gnome.enable = true;
         autoLogin = {
           enable = true;
           user = "gustav";
         };
       };
+      desktopManager.gnome.enable = true;
     };
     printing.enable = true;
   };
