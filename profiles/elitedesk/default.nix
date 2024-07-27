@@ -47,6 +47,7 @@
 
   environment.systemPackages = with pkgs; [
      kdePackages.kdeconnect-kde
+     nixd
   ];
 
   programs.kdeconnect.enable = true;

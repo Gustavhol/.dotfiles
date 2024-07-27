@@ -45,18 +45,18 @@
   # services.xserver.desktopManager.gnome.enable = true;
 
   services = {
-    xserver = {
-      enable = true;
       libinput.enable = true;
       displayManager = {
-        gdm.enable = true;
         autoLogin = {
           enable = true;
           user = "gustav";
         };
       };
-      desktopManager.gnome.enable = true;
-    };
+      xserver = {
+        enable = true;
+        displayManager.gdm.enable = true;
+        desktopManager.gnome.enable = true;
+      };
     printing.enable = true;
   };
        
@@ -94,7 +94,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vscode
+    nixd
     gnomeExtensions.appindicator # tray icon
     gnomeExtensions.screen-rotate # see https://www.reddit.com/r/starlabs_computers/comments/1dyebde/starlite_mkv_autorotate_solution/
     
