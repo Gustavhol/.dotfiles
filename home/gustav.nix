@@ -28,7 +28,7 @@
     flameshot
     transmission
     vscode
-    spotify
+    # spotify
     vlc
     firefox
   #   element-desktop
@@ -39,8 +39,9 @@
   ( with unstablePkgs; [
     beeper
     google-chrome
-    rpi-imager
     obsidian
+    rpi-imager
+    spotify
   ]);
 
   home.file = {
