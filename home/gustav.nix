@@ -34,7 +34,8 @@
     firefox
   #   element-desktop
     element-desktop-wayland
-  #  nixvim.homeManagerModules.nixvim
+    gnomeExtensions.gsconnect
+    gnomeExtensions.touch-x
   ])
   ++ 
   ( with unstablePkgs; [
@@ -59,6 +60,16 @@
 
   home.sessionVariables = {
       EDITOR = "nvim";
+  };
+
+  dconf.settings = {
+    "org/gnome/shell" = {
+      disable-user-extensions = false;
+      enabled-extensions = [
+        "touchx@neuromorph"
+        "gsconnect@andyholmes.github.io"
+    ];
+    };
   };
 
   programs = {
