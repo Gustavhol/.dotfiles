@@ -29,10 +29,8 @@
     flameshot
     transmission
     vscode
-    # spotify
     vlc
     firefox
-  #   element-desktop
     element-desktop-wayland
     gnomeExtensions.gsconnect
     gnomeExtensions.touch-x
