@@ -115,7 +115,6 @@
           ];
           extraSpecialArgs = {
             inherit inputs;
-            # inherit nixvim;
             unstablePkgs = genUnstablePkgs "x86_64-linux";
             inherit systemSettings;
             inherit userSettings;
