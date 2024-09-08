@@ -13,6 +13,8 @@
     #  nixvim.nixosModules.nixvim
     ];
 
+  boot.supportedFilesystems = ["zfs"];
+
   networking = {
     hostName = "golmsten"; # Define your hostname.
     firewall = { 
@@ -43,6 +45,9 @@
       plasma6.enable = true;
     };
     printing.enable = true;
+    zfs = {
+      enable = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
