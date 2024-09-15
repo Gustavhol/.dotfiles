@@ -49,6 +49,10 @@
     zfs = {
       autoScrub.enable = true;
     };
+    ollama = {
+      enable = true;
+      acceleration = "cuda";
+};
   };
 
   environment.systemPackages = with pkgs; [
