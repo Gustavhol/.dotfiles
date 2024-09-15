@@ -17,6 +17,7 @@
 
   networking = {
     hostName = "golmsten"; # Define your hostname.
+    hostId = "336bf6d7";
     firewall = { 
       enable = true;
       allowedTCPPortRanges = [ 
@@ -46,7 +47,7 @@
     };
     printing.enable = true;
     zfs = {
-      enable = true;
+      autoScrub.enable = true;
     };
   };
 
