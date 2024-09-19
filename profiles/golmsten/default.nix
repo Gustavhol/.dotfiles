@@ -51,16 +51,20 @@
     };
     ollama = {
       enable = true;
+      package = unstablePkgs.ollama;
       acceleration = "cuda";
 };
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = (with pkgs; [
      kdePackages.kdeconnect-kde
      angryipscanner
      kitty
      nixd
-  ];
+  ]) ++ (with unstablePkgs; [
+    ollama
+    fabric-ai
+  ]);
 
   programs.kdeconnect.enable = true;
 
