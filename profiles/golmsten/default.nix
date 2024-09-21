@@ -59,7 +59,6 @@
   environment.systemPackages = (with pkgs; [
      kdePackages.kdeconnect-kde
      angryipscanner
-     kitty
      nixd
   ]) ++ (with unstablePkgs; [
     ollama
