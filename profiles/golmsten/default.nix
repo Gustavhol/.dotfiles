@@ -5,18 +5,17 @@
 { config, inputs, pkgs, unstablePkgs, userSettings, systemSettings, nix-colors, nixvim, vscode-server, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
+  imports = [
       ./hardware-configuration.nix
       ./../common/common-nixos.nix
       ./../common/pipewire.nix
-    #  nixvim.nixosModules.nixvim
+      ./nvidia.nix
     ];
 
   boot.supportedFilesystems = ["zfs"];
 
   networking = {
-    hostName = "golmsten"; # Define your hostname.
+    hostName = "golmsten";
     hostId = "336bf6d7";
     firewall = { 
       enable = true;
