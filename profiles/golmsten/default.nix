@@ -61,6 +61,7 @@
      angryipscanner
      nixd
   ]) ++ (with unstablePkgs; [
+    #(pkgs.ollama.override { enableCuda = true; })
     ollama
     fabric-ai
   ]);
