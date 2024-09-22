@@ -2,24 +2,16 @@
 
 {
   hardware.nvidia = {
-    nvidiaDriver = true;
-    nvidiaPackages = with pkgs.linuxPackages; nvidiaPackages.cudatoolkit;
+    modesetting.enable = true;
+    package = pkgs.linuxPackages.nvidiaPackages.stable;
   };
-
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    videoDrivers = [ "nvidia" ];
-  };
-
+  
   services.xserver = {
-    enable = true;
-    layout = "us";  # Set your preferred keyboard layout
     videoDrivers = [ "nvidia" ];
   };
 
   environment.systemPackages = with pkgs; [
     cudatoolkit
-    nvidia_x11  # NVIDIA X11 driver for graphics
+    nvtopPackages.nvidia
   ];
 }

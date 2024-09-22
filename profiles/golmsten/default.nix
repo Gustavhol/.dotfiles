@@ -14,6 +14,12 @@
 
   boot.supportedFilesystems = ["zfs"];
 
+  fileSystems."/data" = { 
+    device = "data";
+    fsType = "zfs";
+    options = [ "zfsutil" ];
+  };
+
   networking = {
     hostName = "golmsten";
     hostId = "336bf6d7";
