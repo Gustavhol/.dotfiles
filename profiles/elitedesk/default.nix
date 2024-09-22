@@ -26,23 +26,23 @@
     };   
   };
 
-  services = {
-  # Enable the X11 windowing system.    
+  services = {  
     xserver = {
       enable = true;
-      xkb.layout = "se";
-      xkb.variant = "";
     };
     displayManager = {
       sddm.enable = true;
       sddm.wayland.enable = true;
-      autoLogin.enable = true;
-      autoLogin.user = "gustav";
+      autoLogin = {
+        enable =true;
+        user = "gustav";
+      };
     };
     desktopManager = {
       plasma6.enable = true;
     };
     printing.enable = true;
+    flatpak.enable = true;
   };
 
   environment.systemPackages = with pkgs; [

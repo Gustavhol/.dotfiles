@@ -58,6 +58,7 @@
         desktopManager.gnome.enable = true;
       };
     printing.enable = true;
+    flatpak.enable = true;
   };
        
   # Remove some GNOME default packages

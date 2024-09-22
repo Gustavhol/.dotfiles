@@ -25,7 +25,7 @@
     unicode-emoji
     starship
     eza
-    orca-slicer
+    # orca-slicer
     flameshot
     transmission
     vscode
@@ -37,6 +37,7 @@
   ])
   ++ 
   ( with unstablePkgs; [
+    orca-slicer
     beeper
     google-chrome
     obsidian
