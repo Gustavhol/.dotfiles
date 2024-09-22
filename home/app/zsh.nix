@@ -21,6 +21,9 @@
       hmsf = "home-manager switch --flake .";
       nrsf = "sudo nixos-rebuild switch --flake .";
     };
+    initExtra = ''
+      ssht() { ssh -t "$1" "export TERM=xterm-color; /bin/bash"; }
+      '';
     oh-my-zsh = {
       enable = true;
       plugins = [ 

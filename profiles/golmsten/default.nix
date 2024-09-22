@@ -5,16 +5,24 @@
 { config, inputs, pkgs, unstablePkgs, userSettings, systemSettings, nix-colors, nixvim, vscode-server, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
+  imports = [
       ./hardware-configuration.nix
       ./../common/common-nixos.nix
       ./../common/pipewire.nix
-    #  nixvim.nixosModules.nixvim
+      ./nvidia.nix
     ];
 
+  boot.supportedFilesystems = ["zfs"];
+
+  fileSystems."/data" = { 
+    device = "data";
+    fsType = "zfs";
+    options = [ "zfsutil" ];
+  };
+
   networking = {
-    hostName = "elitedesk"; # Define your hostname.
+    hostName = "golmsten";
+    hostId = "336bf6d7";
     firewall = { 
       enable = true;
       allowedTCPPortRanges = [ 
@@ -26,36 +34,44 @@
     };   
   };
 
-  services = {  
+  services = {
+  # Enable the X11 windowing system.    
     xserver = {
       enable = true;
+      xkb.layout = "se";
+      xkb.variant = "";
     };
     displayManager = {
       sddm.enable = true;
       sddm.wayland.enable = true;
-      autoLogin = {
-        enable =true;
-        user = "gustav";
-      };
+      autoLogin.enable = true;
+      autoLogin.user = "gustav";
     };
     desktopManager = {
       plasma6.enable = true;
     };
     printing.enable = true;
-    flatpak.enable = true;
+    zfs = {
+      autoScrub.enable = true;
+    };
+    ollama = {
+      enable = true;
+      package = unstablePkgs.ollama;
+      acceleration = "cuda";
+};
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = (with pkgs; [
      kdePackages.kdeconnect-kde
      angryipscanner
-     kitty
      nixd
-  ];
+  ]) ++ (with unstablePkgs; [
+    #(pkgs.ollama.override { enableCuda = true; })
+    ollama
+    fabric-ai
+  ]);
 
   programs.kdeconnect.enable = true;
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  system.stateVersion = "23.11"; # DO NOT CHANGE!!! 
+  system.stateVersion = "24.05"; # DO NOT CHANGE!!! 
   }

@@ -70,15 +70,19 @@
 
   environment.systemPackages = with pkgs; [
      btop
+     dig
+     docker
      docker-compose
      ffmpeg
      flatpak
      fzf
      git
+     go
      gotop
      htop
      jq
      just
+     kitty
      mpv
      nil
      ripgrep

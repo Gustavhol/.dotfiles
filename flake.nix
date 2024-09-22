@@ -104,6 +104,7 @@
       nixosConfigurations = {
         elitedesk = nixosSystem "x86_64-linux" "elitedesk" "gustav";
         starlite = nixosSystem "x86_64-linux" "starlite" "gustav";
+        golmsten = nixosSystem "x86_64-linux" "golmsten" "gustav";
         probook = nixosSystem "x86_64-linux" "probook" "gustav";
       };
       homeConfigurations = {
@@ -115,7 +116,6 @@
           ];
           extraSpecialArgs = {
             inherit inputs;
-            # inherit nixvim;
             unstablePkgs = genUnstablePkgs "x86_64-linux";
             inherit systemSettings;
             inherit userSettings;
