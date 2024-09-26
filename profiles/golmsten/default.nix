@@ -58,7 +58,10 @@
       enable = true;
       package = unstablePkgs.ollama;
       acceleration = "cuda";
-};
+    };
+    flatpak = {
+      enable = true;
+    }
   };
 
   environment.systemPackages = (with pkgs; [
