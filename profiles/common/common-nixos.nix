@@ -70,6 +70,7 @@
 
   environment.systemPackages = with pkgs; [
      btop
+     comma
      dig
      docker
      docker-compose

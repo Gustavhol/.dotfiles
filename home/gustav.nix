@@ -60,6 +60,7 @@
 
   home.sessionVariables = {
       EDITOR = "nvim";
+      TERM = "xterm-kitty";
   };
 
   dconf.settings = {
