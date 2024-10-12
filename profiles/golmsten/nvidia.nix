@@ -7,10 +7,6 @@
       package = pkgs.linuxPackages.nvidiaPackages.stable;
       nvidiaSettings = true;
     };
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
   };
   
   services.xserver = {

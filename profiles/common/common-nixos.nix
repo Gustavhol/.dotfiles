@@ -25,7 +25,7 @@
 
   nix.gc = {
     automatic = true;
-    dates = "weekly";
+    dates = "daily";
     options = "--delete-older-than 15d";
   };
 
@@ -101,12 +101,19 @@
     noto-fonts
   ];
  
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
+  programs = {
+    zsh = {    
+      enableCompletion = true;
+      enable = true;
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
+    };
+    appimage = {
+      enable = true;
+      binfmt = true;
+};
   };
+  
 
   environment.shells = with pkgs; [ zsh ];
 
