@@ -62,6 +62,10 @@
     flatpak = {
       enable = true;
     };
+    syncthing = {
+      enable = true;
+      openDefaultPorts = true;
+    };
   };
 
   environment.systemPackages = (with pkgs; [
