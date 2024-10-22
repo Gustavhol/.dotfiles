@@ -17,7 +17,7 @@
   fileSystems."/data" = { 
     device = "data";
     fsType = "zfs";
-    options = [ "zfsutil" ];
+    options = [ "zfsutil" "noauto" ];
   };
 
   networking = {
@@ -53,6 +53,7 @@
     printing.enable = true;
     zfs = {
       autoScrub.enable = true;
+
     };
     ollama = {
       enable = true;
