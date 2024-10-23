@@ -27,6 +27,7 @@
       skog = {
         enable = true;
         package = unstablePkgs.papermc;
+        jvmOpts = "-Xmx10G -Xms10G";
 
         serverProperties = {
           gamemode = "creative";
