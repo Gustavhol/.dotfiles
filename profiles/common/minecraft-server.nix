@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, ... }:
+{ pkgs, unstablePkgs, lib, inputs, ... }:
 
 {
   imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
@@ -26,7 +26,7 @@
     servers = {
       skog = {
         enable = true;
-        package = pkgs.papermc;
+        package = unstablePkgs.papermc;
 
         serverProperties = {
           gamemode = "creative";
