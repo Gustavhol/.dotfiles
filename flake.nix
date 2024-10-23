@@ -19,6 +19,7 @@
         url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+      nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
   outputs = { 
@@ -31,10 +32,11 @@
    nix-colors, 
    vscode-server, 
    firefox-addons,
+   nix-minecraft,
    ... 
    }@inputs:
     let 
-      inputs = { inherit nixpkgs nixpkgs-unstable home-manager nixvim alacritty-theme nix-colors vscode-server firefox-addons; };
+      inputs = { inherit nixpkgs nixpkgs-unstable home-manager nixvim alacritty-theme nix-colors vscode-server firefox-addons nix-minecraft; };
       
       genPkgs = system: import nixpkgs { inherit system; config.allowUnfree = true; config.allowUnfreePredicate = _: true; };
       genUnstablePkgs = system: import nixpkgs-unstable { inherit system; config.allowUnfree = true; config.allowUnfreePredicate = _: true; };

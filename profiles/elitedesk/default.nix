@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./../common/minecraft-server.nix
       ./../common/common-nixos.nix
       ./../common/pipewire.nix
     #  nixvim.nixosModules.nixvim
