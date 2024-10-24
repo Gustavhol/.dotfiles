@@ -66,6 +66,7 @@
     syncthing = {
       enable = true;
       openDefaultPorts = true;
+      configDir = "/home/gustav/.config/syncthing";
     };
   };
 
