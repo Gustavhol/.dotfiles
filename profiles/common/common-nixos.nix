@@ -56,7 +56,7 @@
     isNormalUser = true;
     description = userSettings.name;
     hashedPassword = "$y$j9T$GDQYpeHXABiM.DhOJbDDq.$WpAwWEHSj7xdoDyHn0.mIIz/PaOVWRFcEAl6bO2hQk6";
-    extraGroups = [ "networkmanager" "wheel" "docker"];
+    extraGroups = [ "networkmanager" "wheel" "docker" "dialout"];
     packages = 
     (with pkgs; [
       syncthing
@@ -83,11 +83,13 @@
      htop
      jq
      just
+     kio-admin
      kitty
      mpv
      nil
      ripgrep
      pkgs.tailscale
+     tmux
      vim
      wget
      zellij
