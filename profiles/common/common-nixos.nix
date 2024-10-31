@@ -29,6 +29,8 @@
     options = "--delete-older-than 15d";
   };
 
+  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+
   networking.networkmanager.enable = true;
 #  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -56,7 +58,7 @@
     isNormalUser = true;
     description = userSettings.name;
     hashedPassword = "$y$j9T$GDQYpeHXABiM.DhOJbDDq.$WpAwWEHSj7xdoDyHn0.mIIz/PaOVWRFcEAl6bO2hQk6";
-    extraGroups = [ "networkmanager" "wheel" "docker" "dialout"];
+    extraGroups = [ "networkmanager" "wheel" "docker" "dialout" "tty"];
     packages = 
     (with pkgs; [
       syncthing
@@ -87,7 +89,9 @@
      kitty
      mpv
      nil
+     nixd
      ripgrep
+     rsync
      pkgs.tailscale
      tmux
      vim

@@ -9,20 +9,19 @@
       ./hardware-configuration.nix
       ./../common/common-nixos.nix
       ./../common/pipewire.nix
-      ./nvidia.nix
     ];
 
   boot.supportedFilesystems = ["zfs"];
 
-  fileSystems."/data" = { 
-    device = "data";
-    fsType = "zfs";
-    options = [ "zfsutil" "noauto" ];
-  };
+  # fileSystems."/data" = { 
+  #   device = "data";
+  #   fsType = "zfs";
+  #   options = [ "zfsutil" "noauto" ];
+  # };
 
   networking = {
-    hostName = "golmsten";
-    hostId = "336bf6d7";
+    hostName = "nix-nas";
+    hostId = "336bf6d8";
     firewall = { 
       enable = true;
       allowedTCPPortRanges = [ 
@@ -85,9 +84,6 @@
      grsync
      nfs-utils
   ]) ++ (with unstablePkgs; [
-    #(pkgs.ollama.override { enableCuda = true; })
-    ollama
-    fabric-ai
   ]);
 
   programs.kdeconnect.enable = true;
