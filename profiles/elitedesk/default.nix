@@ -8,52 +8,53 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./../common/minecraft-server.nix
+      ./../../services/minecraft/default.nix
+      ./../../services/plasma6/default.nix
       ./../common/common-nixos.nix
       ./../common/pipewire.nix
-    #  nixvim.nixosModules.nixvim
     ];
 
   networking = {
     hostName = "elitedesk"; # Define your hostname.
+    hostId = "336bf6d2";
     firewall = { 
       enable = true;
-      allowedTCPPortRanges = [ 
-        { from = 1714; to = 1764; } # KDE Connect
-      ];  
-      allowedUDPPortRanges = [ 
-        { from = 1714; to = 1764; } # KDE Connect
-      ];  
+    #   allowedTCPPortRanges = [ 
+    #     { from = 1714; to = 1764; } # KDE Connect
+    #   ];  
+    #   allowedUDPPortRanges = [ 
+    #     { from = 1714; to = 1764; } # KDE Connect
+    #   ];  
     };   
   };
 
   services = {  
-    xserver = {
-      enable = true;
-    };
-    displayManager = {
-      sddm.enable = true;
-      sddm.wayland.enable = true;
-      autoLogin = {
-        enable =true;
-        user = "gustav";
-      };
-    };
-    desktopManager = {
-      plasma6.enable = true;
-    };
+    # xserver = {
+    #   enable = true;
+    # };
+    # displayManager = {
+    #   sddm.enable = true;
+    #   sddm.wayland.enable = true;
+    #   autoLogin = {
+    #     enable =true;
+    #     user = "gustav";
+    #   };
+    # };
+    # desktopManager = {
+    #   plasma6.enable = true;
+    # };
     printing.enable = true;
     flatpak.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
-     kdePackages.kdeconnect-kde
+    # kdePackages.kdeconnect-kde
      angryipscanner
      kitty
      nixd
   ];
 
-  programs.kdeconnect.enable = true;
+  # programs.kdeconnect.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;

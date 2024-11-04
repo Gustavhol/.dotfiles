@@ -1,7 +1,5 @@
 {config, pkgs, lib, ...}:
 
-
-
 {
   networking = {
     firewall = { 
@@ -26,7 +24,7 @@
     settings = {
       service = {
         motd = "Testmeddelande";
-        timezone = "Europe/Stockholm"
+        timezone = "Europe/Stockholm";
       };
       auth = {
         local = {
@@ -36,6 +34,8 @@
     };
   };
   postgresql = {
+    enable = true;
+    package = pkgs.postgresql_16;
     ensureDatabases = [ "vikunja" ];
     ensureUsers = [
         {

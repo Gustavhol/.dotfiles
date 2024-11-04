@@ -9,6 +9,7 @@
       ./hardware-configuration.nix
       ./../common/common-nixos.nix
       ./../common/pipewire.nix
+      ./../../services/plasma6/default.nix
     ];
 
   boot.supportedFilesystems = ["zfs"];
@@ -24,12 +25,12 @@
     hostId = "336bf6d8";
     firewall = { 
       enable = true;
-      allowedTCPPortRanges = [ 
-        { from = 1714; to = 1764; } # KDE Connect
-      ];  
-      allowedUDPPortRanges = [ 
-        { from = 1714; to = 1764; } # KDE Connect
-      ];  
+      # allowedTCPPortRanges = [ 
+      #   { from = 1714; to = 1764; } # KDE Connect
+      # ];  
+      # allowedUDPPortRanges = [ 
+      #   { from = 1714; to = 1764; } # KDE Connect
+      # ];  
     };   
   };
 
@@ -40,33 +41,33 @@
 
   services = {
   # Enable the X11 windowing system.    
-    xserver = {
-      enable = true;
-      xkb.layout = "se";
-      xkb.variant = "";
-    };
-    displayManager = {
-      sddm.enable = true;
-      sddm.wayland.enable = true;
-      autoLogin.enable = true;
-      autoLogin.user = "gustav";
-    };
-    desktopManager = {
-      plasma6.enable = true;
-    };
+    # xserver = {
+    #   enable = true;
+    #   xkb.layout = "se";
+    #   xkb.variant = "";
+    # };
+    # displayManager = {
+    #   sddm.enable = true;
+    #   sddm.wayland.enable = true;
+    #   autoLogin.enable = true;
+    #   autoLogin.user = "gustav";
+    # };
+    # desktopManager = {
+    #   plasma6.enable = true;
+    # };
     printing.enable = true;
     zfs = {
       autoScrub.enable = true;
 
     };
-    ollama = {
-      enable = true;
-      package = unstablePkgs.ollama;
-      acceleration = "cuda";
+    # ollama = {
+    #   enable = true;
+    #   package = unstablePkgs.ollama;
+    #   acceleration = "cuda";
     };
-    flatpak = {
-      enable = true;
-    };
+    # flatpak = {
+    #   enable = true;
+    # };
     syncthing = {
       enable = true;
       dataDir = "/home/gustav";
@@ -79,14 +80,14 @@
   };
 
   environment.systemPackages = (with pkgs; [
-     kdePackages.kdeconnect-kde
+    #  kdePackages.kdeconnect-kde
      angryipscanner
      grsync
      nfs-utils
   ]) ++ (with unstablePkgs; [
   ]);
 
-  programs.kdeconnect.enable = true;
+  # programs.kdeconnect.enable = true;
 
   system.stateVersion = "24.05"; # DO NOT CHANGE!!! 
   }
