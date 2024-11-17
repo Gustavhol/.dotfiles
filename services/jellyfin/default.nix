@@ -13,7 +13,7 @@
   fileSystems."/mnt/media" = {
     device = "192.168.1.9:/data/media";
     fsType = "nfs";
-    options = "rsize=8192,wsize=8192,timeo=14,intr";
+    options = [ "rsize=8192" "wsize=8192" "timeo=14" "intr" ];
   };
 
   services.jellyfin = {
