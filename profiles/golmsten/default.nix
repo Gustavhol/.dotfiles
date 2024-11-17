@@ -84,7 +84,12 @@
       group = "users";
       guiAddress = "0.0.0.0:8384";
     };
-    
+    nfs.server = {
+    enable = true;
+    exports = ''
+      /data/media 192.168.1.0/24(rw,sync,no_subtree_check)
+    '';
+    };    
   };
 
   environment.systemPackages = (with pkgs; [

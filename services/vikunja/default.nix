@@ -59,7 +59,9 @@
         description = "Backup Vikunja PostgreSQL Database";
         after = [ "postgresql.service" ];
         serviceConfig = {
-          ExecStart = "${pkgs.postgresql_16}/bin/pg_dump --file=/var/backups/vikunja-db-backup.sql --username=vikunja --host=/run/postgresql --format=custom vikunja";
+          ExecStart = "${pkgs.postgresql_16}/bin/pg_dump --file=/var/backups/vikunja-db-backup-$(date +%Y%m%d).sql --username=vikunja --host=/run/postgresql --format=custom vikunja";
+          StandardOutput = "journal";
+          StandardError = "journal";
           User = "vikunja";
           Group = "vikunja";
         };
@@ -75,7 +77,7 @@
         };
       };
     };
-    timers.vikunja-db-backup-timer = {
+    timers.vikunja-db-backup = {
       description = "Run Vikunja DB Backup Daily";
       timerConfig = {
         OnCalendar = "daily";

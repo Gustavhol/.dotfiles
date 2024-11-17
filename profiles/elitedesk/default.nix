@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
       ./../../services/minecraft/default.nix
       ./../../services/plasma6/default.nix
+      ./../../services/jellyfin/default.nix
       ./../common/common-nixos.nix
       ./../common/pipewire.nix
     ];
