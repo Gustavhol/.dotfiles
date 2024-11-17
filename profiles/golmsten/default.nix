@@ -44,6 +44,8 @@
     enableOnBoot = true;
   };
 
+  hardware.steam-hardware.enable = true;
+
   services = {
   # Enable the X11 windowing system.    
     # xserver = {
