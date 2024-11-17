@@ -23,10 +23,10 @@
 
   hardware = {
     opengl.enable = true; # Required for hardware acceleration
-    video = {
-    #  acceleration.vaapi = true; # Enable VA-API for Quick Sync
-      drivers = [ "intel-media-driver" ];
-    };
+    # video = {
+    #   acceleration.vaapi = true; # Enable VA-API for Quick Sync
+    #   drivers = [ "intel-media-driver" ];
+    # };
   };
 
   users.extraGroups = {
