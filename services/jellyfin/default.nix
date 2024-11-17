@@ -4,8 +4,10 @@
 
   environment.systemPackages = with pkgs; [
     nfs-utils
-    ffmpeg
     intel-media-driver
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
     ];
   
   fileSystems."/mnt/media" = {
@@ -17,8 +19,9 @@
   services.jellyfin = {
     enable = true;
     dataDir = "/var/lib/jellyfin"; # Default location for metadata
-    bind = "0.0.0.0"; # Listen on all network interfaces
-    extraOptions = "--ffmpeg=/path/to/ffmpeg"; # Optional: Specify custom ffmpeg if needed
+    openFirewall = true;
+  #  bind = "0.0.0.0"; # Listen on all network interfaces
+  #  extraOptions = "--ffmpeg=/path/to/ffmpeg"; # Optional: Specify custom ffmpeg if needed
   };
 
   hardware = {
@@ -35,7 +38,7 @@
 
   networking = {
     firewall = {
-      allowedTCPPorts = [ 2049 111 8096 8920 ]; # Default ports for Jellyfin and NFS
+      allowedTCPPorts = [ 2049 111 ]; # Default ports for Jellyfin and NFS
       allowedUDPPorts = [ 2049 111 ]; # Default ports for NFS
     };
   };
