@@ -12,7 +12,7 @@
       ./../common/pipewire.nix
       ./../../services/vikunja/default.nix
       ./../../services/plasma6/default.nix
-      ./../../services/jellyfin-nix/jellyfin.nix
+      ./../../services/jellyfin-nvidia/jellyfin.nix
     ];
 
   boot.supportedFilesystems = ["zfs"];
