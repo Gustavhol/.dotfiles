@@ -16,5 +16,6 @@
   environment.systemPackages = with pkgs; [
     cudatoolkit
     nvtopPackages.nvidia
+    nvidia-vaapi-driver
   ];
 }
