@@ -85,7 +85,7 @@
         starlite = nixosSystem "x86_64-linux" "starlite" "gustav";
         golmsten = nixosSystem "x86_64-linux" "golmsten" "gustav";
         nix-nas = nixosSystem "x86_64-linux" "nix-nas" "gustav";
-        probook = nixosSystem "x86_64-linux" "probook" "gustav";
+      # probook = nixosSystem "x86_64-linux" "probook" "gustav";
       };
       homeConfigurations = {
         gustav = home-manager.lib.homeManagerConfiguration {
