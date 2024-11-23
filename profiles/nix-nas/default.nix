@@ -1,20 +1,28 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, inputs, pkgs, unstablePkgs, userSettings, systemSettings, nix-colors, nixvim, vscode-server, ... }:
-
 {
+  config,
+  inputs,
+  pkgs,
+  unstablePkgs,
+  userSettings,
+  systemSettings,
+  nix-colors,
+  nixvim,
+  vscode-server,
+  ...
+}: {
   imports = [
-      ./hardware-configuration.nix
-      ./../common/common-nixos.nix
-      ./../common/pipewire.nix
+    ./hardware-configuration.nix
+    ./../common/common-nixos.nix
+    ./../common/pipewire.nix
     ./../../services/plasma6/plasma6.nix
-    ];
+  ];
 
   boot.supportedFilesystems = ["zfs"];
 
-  # fileSystems."/data" = { 
+  # fileSystems."/data" = {
   #   device = "data";
   #   fsType = "zfs";
   #   options = [ "zfsutil" "noauto" ];
@@ -23,15 +31,15 @@
   networking = {
     hostName = "nix-nas";
     hostId = "336bf6d8";
-    firewall = { 
+    firewall = {
       enable = true;
-      # allowedTCPPortRanges = [ 
+      # allowedTCPPortRanges = [
       #   { from = 1714; to = 1764; } # KDE Connect
-      # ];  
-      # allowedUDPPortRanges = [ 
+      # ];
+      # allowedUDPPortRanges = [
       #   { from = 1714; to = 1764; } # KDE Connect
-      # ];  
-    };   
+      # ];
+    };
   };
 
   virtualisation.docker = {
@@ -40,7 +48,7 @@
   };
 
   services = {
-  # Enable the X11 windowing system.    
+    # Enable the X11 windowing system.
     # xserver = {
     #   enable = true;
     #   xkb.layout = "se";
@@ -58,7 +66,6 @@
     printing.enable = true;
     zfs = {
       autoScrub.enable = true;
-
     };
     # ollama = {
     #   enable = true;
@@ -77,16 +84,19 @@
       group = "users";
       guiAddress = "0.0.0.0:8384";
     };
+  };
 
-  environment.systemPackages = (with pkgs; [
-    #  kdePackages.kdeconnect-kde
-     angryipscanner
-     grsync
-     nfs-utils
-  ]) ++ (with unstablePkgs; [
-  ]);
+  environment.systemPackages =
+    (with pkgs; [
+      #  kdePackages.kdeconnect-kde
+      angryipscanner
+      grsync
+      nfs-utils
+    ])
+    ++ (with unstablePkgs; [
+      ]);
 
   # programs.kdeconnect.enable = true;
 
-  system.stateVersion = "24.05"; # DO NOT CHANGE!!! 
-  }
+  system.stateVersion = "24.05"; # DO NOT CHANGE!!!
+}
