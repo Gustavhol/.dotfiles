@@ -77,7 +77,6 @@
       group = "users";
       guiAddress = "0.0.0.0:8384";
     };
-  };
 
   environment.systemPackages = (with pkgs; [
     #  kdePackages.kdeconnect-kde
