@@ -9,7 +9,7 @@
       ./hardware-configuration.nix
       ./../common/common-nixos.nix
       ./../common/pipewire.nix
-      ./../../services/plasma6/default.nix
+    ./../../services/plasma6/plasma6.nix
     ];
 
   boot.supportedFilesystems = ["zfs"];

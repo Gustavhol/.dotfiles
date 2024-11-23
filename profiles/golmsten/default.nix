@@ -18,8 +18,8 @@
     ./nvidia.nix
     ./../common/common-nixos.nix
     ./../common/pipewire.nix
-    ./../../services/vikunja/default.nix
-    ./../../services/plasma6/default.nix
+    ./../../services/vikunja/vikunja.nix
+    ./../../services/plasma6/plasma6.nix
     ./../../services/jellyfin-nvidia/jellyfin.nix
   ];
 
