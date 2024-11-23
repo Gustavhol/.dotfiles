@@ -1,40 +1,50 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, inputs, pkgs, unstablePkgs, userSettings, systemSettings, nix-colors, nixvim, vscode-server, ... }:
-
 {
+  config,
+  inputs,
+  pkgs,
+  unstablePkgs,
+  userSettings,
+  systemSettings,
+  nix-colors,
+  nixvim,
+  vscode-server,
+  ...
+}: {
   imports = [
-      ./hardware-configuration.nix
-      ./nvidia.nix
-      ./../common/common-nixos.nix
-      ./../common/pipewire.nix
-      ./../../services/vikunja/default.nix
-      ./../../services/plasma6/default.nix
-      ./../../services/jellyfin-nvidia/jellyfin.nix
-    ];
+    ./hardware-configuration.nix
+    ./nvidia.nix
+    ./../common/common-nixos.nix
+    ./../common/pipewire.nix
+    ./../../services/vikunja/default.nix
+    ./../../services/plasma6/default.nix
+    ./../../services/jellyfin-nvidia/jellyfin.nix
+  ];
 
   boot.supportedFilesystems = ["zfs"];
 
-  fileSystems."/data" = { 
+  fileSystems."/data" = {
     device = "data";
     fsType = "zfs";
-    options = [ "zfsutil" "noauto" ];
+    options = ["zfsutil" "noauto"];
   };
 
   networking = {
     hostName = "golmsten";
     hostId = "336bf6d7";
-    firewall = { 
+    firewall = {
       enable = true;
-       allowedTCPPorts = [
-         2049 111
-       ];
-       allowedUDPPorts = [ 
-         2049 111
-       ];  
-    };   
+      allowedTCPPorts = [
+        2049
+        111
+      ];
+      allowedUDPPorts = [
+        2049
+        111
+      ];
+    };
   };
 
   virtualisation.docker = {
@@ -46,7 +56,6 @@
     printing.enable = true;
     zfs = {
       autoScrub.enable = true;
-
     };
     ollama = {
       enable = true;
@@ -66,21 +75,26 @@
       guiAddress = "0.0.0.0:8384";
     };
     nfs.server = {
-    enable = true;
-    exports = ''
-      /data/media 192.168.1.0/24(rw,sync,no_subtree_check)
-    '';
-    };    
+      enable = true;
+      exports = ''
+        /data/media 192.168.1.0/24(rw,sync,no_subtree_check)
+      '';
+    };
   };
 
-  environment.systemPackages = (with pkgs; [
-     angryipscanner
-     grsync
-     nfs-utils
-  ]) ++ (with unstablePkgs; [
-    ollama
-    fabric-ai
-  ]);
+  environment.systemPackages =
+    (with pkgs; [
+      alejandra
+      angryipscanner
+      grsync
+      nfs-utils
+      nixpkgs-fmt
+      stremio
+    ])
+    ++ (with unstablePkgs; [
+      ollama
+      fabric-ai
+    ]);
 
-  system.stateVersion = "24.05"; # DO NOT CHANGE!!! 
-  }
+  system.stateVersion = "24.05"; # DO NOT CHANGE!!!
+}
