@@ -19,6 +19,7 @@
         url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+      nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
   outputs = { 
@@ -31,10 +32,11 @@
    nix-colors, 
    vscode-server, 
    firefox-addons,
+   nix-minecraft,
    ... 
    }@inputs:
     let 
-      inputs = { inherit nixpkgs nixpkgs-unstable home-manager nixvim alacritty-theme nix-colors vscode-server firefox-addons; };
+      inputs = { inherit nixpkgs nixpkgs-unstable home-manager nixvim alacritty-theme nix-colors vscode-server firefox-addons nix-minecraft; };
       
       genPkgs = system: import nixpkgs { inherit system; config.allowUnfree = true; config.allowUnfreePredicate = _: true; };
       genUnstablePkgs = system: import nixpkgs-unstable { inherit system; config.allowUnfree = true; config.allowUnfreePredicate = _: true; };
@@ -55,11 +57,6 @@
         term = "alacritty";
       };
 
-      # lib = nixpkgs.lib;
-      # pkgs = nixpkgs.legacyPackages.${systemSettings.system};
-      # pkgs = import nixpkgs { system = "x86_64-linux"; config = { allowUnfree = true; allowUnfreePredicate = _: true;}; };
-      # pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; config = { allowUnfree = true; allowUnfreePredicate = _: true;}; };
-      # pkgs-unstable = nixpkgs-unstable.legacyPackages.${systemSettings.system};
       nixosSystem = system: hostname: username:
         let
           pkgs = genPkgs system;
@@ -68,35 +65,17 @@
           nixpkgs.lib.nixosSystem {
             inherit system;
             specialArgs = {
-              # inherit systemSettings;
-              # inherit userSettings;
               inherit pkgs unstablePkgs systemSettings userSettings inputs;
               customArgs = {inherit system hostname username pkgs unstablePkgs nixvim nix-colors vscode-server; };
             };
             modules = [ 
-             # ./profiles/${hostname}/configuration.nix
               ./profiles/${hostname}
                ({ config, pkgs, ...}: {
           # install the overlay
                  nixpkgs.overlays = [ alacritty-theme.overlays.default ];
                })
-              #  ({ config, pkgs, ... }: {
-              #    home-manager.users.gustav = hm: {
-              #      programs.alacritty = {
-              #        enable = true;
-              #        # use a color scheme from the overlay
-              #        settings.import = [ pkgs.alacritty-theme.doom_one ];
-              #      };
-              #    };
-              #  })
               nixvim.nixosModules.nixvim
               vscode-server.nixosModules.default
-              # home-manager.nixosModules.home-manager {
-              #   networking.hostName = hostname;
-              #   home-manager.useGlobalPkgs = true;
-              #   home-manager.useUserPackages = true;
-              #   home-manager.users.${username} = { imports = [ ./home/${username}.nix ]; };
-              # }
               ];
 
             };
@@ -105,7 +84,8 @@
         elitedesk = nixosSystem "x86_64-linux" "elitedesk" "gustav";
         starlite = nixosSystem "x86_64-linux" "starlite" "gustav";
         golmsten = nixosSystem "x86_64-linux" "golmsten" "gustav";
-        probook = nixosSystem "x86_64-linux" "probook" "gustav";
+        nix-nas = nixosSystem "x86_64-linux" "nix-nas" "gustav";
+      # probook = nixosSystem "x86_64-linux" "probook" "gustav";
       };
       homeConfigurations = {
         gustav = home-manager.lib.homeManagerConfiguration {

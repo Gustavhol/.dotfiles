@@ -15,35 +15,30 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ./nvidia.nix
     ./../common/common-nixos.nix
     ./../common/pipewire.nix
-    ./../../services/vikunja/vikunja.nix
     ./../../services/plasma6/plasma6.nix
-    ./../../services/jellyfin-nvidia/jellyfin.nix
   ];
 
   boot.supportedFilesystems = ["zfs"];
 
-  fileSystems."/data" = {
-    device = "data";
-    fsType = "zfs";
-    options = ["zfsutil" "noauto"];
-  };
+  # fileSystems."/data" = {
+  #   device = "data";
+  #   fsType = "zfs";
+  #   options = [ "zfsutil" "noauto" ];
+  # };
 
   networking = {
-    hostName = "golmsten";
-    hostId = "336bf6d7";
+    hostName = "nix-nas";
+    hostId = "336bf6d8";
     firewall = {
       enable = true;
-      allowedTCPPorts = [
-        2049
-        111
-      ];
-      allowedUDPPorts = [
-        2049
-        111
-      ];
+      # allowedTCPPortRanges = [
+      #   { from = 1714; to = 1764; } # KDE Connect
+      # ];
+      # allowedUDPPortRanges = [
+      #   { from = 1714; to = 1764; } # KDE Connect
+      # ];
     };
   };
 
@@ -53,18 +48,33 @@
   };
 
   services = {
+    # Enable the X11 windowing system.
+    # xserver = {
+    #   enable = true;
+    #   xkb.layout = "se";
+    #   xkb.variant = "";
+    # };
+    # displayManager = {
+    #   sddm.enable = true;
+    #   sddm.wayland.enable = true;
+    #   autoLogin.enable = true;
+    #   autoLogin.user = "gustav";
+    # };
+    # desktopManager = {
+    #   plasma6.enable = true;
+    # };
     printing.enable = true;
     zfs = {
       autoScrub.enable = true;
     };
-    ollama = {
-      enable = true;
-      package = unstablePkgs.ollama;
-      acceleration = "cuda";
-    };
-    flatpak = {
-      enable = true;
-    };
+    # ollama = {
+    #   enable = true;
+    #   package = unstablePkgs.ollama;
+    #   acceleration = "cuda";
+    # };
+    # flatpak = {
+    #   enable = true;
+    # };
     syncthing = {
       enable = true;
       dataDir = "/home/gustav";
@@ -74,27 +84,19 @@
       group = "users";
       guiAddress = "0.0.0.0:8384";
     };
-    nfs.server = {
-      enable = true;
-      exports = ''
-        /data/media 192.168.1.0/24(rw,sync,no_subtree_check)
-      '';
-    };
   };
 
   environment.systemPackages =
     (with pkgs; [
-      alejandra
+      #  kdePackages.kdeconnect-kde
       angryipscanner
       grsync
       nfs-utils
-      nixpkgs-fmt
-      stremio
     ])
     ++ (with unstablePkgs; [
-      ollama
-      fabric-ai
-    ]);
+      ]);
+
+  # programs.kdeconnect.enable = true;
 
   system.stateVersion = "24.05"; # DO NOT CHANGE!!!
 }

@@ -23,6 +23,7 @@
     };
     initExtra = ''
       ssht() { ssh -t "$1" "export TERM=xterm-color; /bin/bash"; }
+      sshz() { ssh -t "$1" "export TERM=xterm-color; /run/current-system/sw/bin/zsh"; }
       '';
     oh-my-zsh = {
       enable = true;
