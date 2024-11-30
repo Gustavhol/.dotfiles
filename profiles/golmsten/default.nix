@@ -90,6 +90,7 @@
       nfs-utils
       nixpkgs-fmt
       stremio
+      arduino-ide
     ])
     ++ (with unstablePkgs; [
       ollama
