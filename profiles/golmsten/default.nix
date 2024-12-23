@@ -82,6 +82,21 @@
     };
   };
 
+  # nixpkgs.overlays = [
+  #   (final: prev: {
+  #     arduino-ide-env = prev.fhsUserEnv {
+  #       name = "arduino-ide-env";
+  #       targetPkgs = pkgs:
+  #         with pkgs; [
+  #           arduino-ide
+  #           python3
+  #           python312Packages.pyserial
+  #         ];
+  #       runScript = "${pkgs.arduino-ide}/bin/arduino-ide";
+  #     };
+  #   })
+  # ];
+
   environment.systemPackages =
     (with pkgs; [
       alejandra
@@ -89,8 +104,13 @@
       grsync
       nfs-utils
       nixpkgs-fmt
+      steam-run
       stremio
-      arduino-ide
+    #  arduino-ide
+      esptool
+      esptool-ck
+      python3
+    #  python311Packages.pyserial
     ])
     ++ (with unstablePkgs; [
       ollama

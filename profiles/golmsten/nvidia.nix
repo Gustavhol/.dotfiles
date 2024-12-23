@@ -4,7 +4,7 @@
   hardware = {
     nvidia = {
       modesetting.enable = true;
-      package = pkgs.linuxPackages.nvidiaPackages.stable;
+      package = pkgs.linuxPackages.nvidiaPackages.beta;
       nvidiaSettings = true;
     };
   };
