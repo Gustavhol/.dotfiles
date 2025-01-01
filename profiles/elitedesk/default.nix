@@ -60,8 +60,12 @@
     angryipscanner
     kitty
     nixd
+    squeezelite
   ];
 
+  services.squeezelite.enable = true;
+  services.squeezelite.pulseAudio = true;
+  services.squeezelite.extraArguments = "";
   # programs.kdeconnect.enable = true;
 
   # Enable the OpenSSH daemon.

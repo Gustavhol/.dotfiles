@@ -39,6 +39,7 @@
       allowedTCPPorts = [
         2049
         111
+        11000 # Nextcloud AIO
       ];
       allowedUDPPorts = [
         2049
