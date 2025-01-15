@@ -40,6 +40,7 @@
         2049
         111
         11000 # Nextcloud AIO
+        2283 # Immich
       ];
       allowedUDPPorts = [
         2049
