@@ -18,7 +18,6 @@
     ./hardware-configuration.nix
     ./../common/common-nixos.nix
     ./../common/pipewire.nix
-    ./../../services/minecraft/minecraft.nix
     ./../../services/plasma6/plasma6.nix
   ];
 
@@ -45,26 +44,11 @@
   };
 
   services = {
-    # xserver = {
-    #   enable = true;
-    # };
-    # displayManager = {
-    #   sddm.enable = true;
-    #   sddm.wayland.enable = true;
-    #   autoLogin = {
-    #     enable =true;
-    #     user = "gustav";
-    #   };
-    # };
-    # desktopManager = {
-    #   plasma6.enable = true;
-    # };
     printing.enable = true;
     flatpak.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
-    # kdePackages.kdeconnect-kde
     alejandra
     angryipscanner
     kitty
@@ -73,14 +57,6 @@
     nixpkgs-fmt
     squeezelite
   ];
-
-#  services.squeezelite.enable = true;
-#  services.squeezelite.pulseAudio = true;
-#  services.squeezelite.extraArguments = "";
-  # programs.kdeconnect.enable = true;
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   system.stateVersion = "24.11"; # DO NOT CHANGE!!!
 }
