@@ -22,6 +22,14 @@
     ./../../services/plasma6/plasma6.nix
   ];
 
+  boot.supportedFilesystems = ["zfs"];
+
+  fileSystems."/mnt/backups" = {
+    device = "backups";
+    fsType = "zfs";
+    options = ["zfsutil" "noauto"];
+  };
+
   networking = {
     hostName = "elitedesk"; # Define your hostname.
     hostId = "336bf6d2";
@@ -57,19 +65,22 @@
 
   environment.systemPackages = with pkgs; [
     # kdePackages.kdeconnect-kde
+    alejandra
     angryipscanner
     kitty
+    nfs-utils
     nixd
+    nixpkgs-fmt
     squeezelite
   ];
 
-  services.squeezelite.enable = true;
-  services.squeezelite.pulseAudio = true;
-  services.squeezelite.extraArguments = "";
+#  services.squeezelite.enable = true;
+#  services.squeezelite.pulseAudio = true;
+#  services.squeezelite.extraArguments = "";
   # programs.kdeconnect.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
-  system.stateVersion = "23.11"; # DO NOT CHANGE!!!
+  system.stateVersion = "24.11"; # DO NOT CHANGE!!!
 }
