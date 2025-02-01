@@ -5,16 +5,24 @@
   # Make sure to adjust the email address and accept terms.
   security.acme = {
     acceptTerms = true;
-    email = "certbot@holmstens.com";
+    defaults = {
+      email = "certbot@holmstens.com";
+      server = "https://acme-staging-v02.api.letsencrypt.org/directory"; # Staging server
+      # server = "https://acme-v02.api.letsencrypt.org/directory"; # Production server
+    };
     # If you want separate certificate derivations for each domain
     # (instead of a single multi-SAN certificate), you can do that here:
     certs = {
-      "cloud.holmstens.com".extraDomains = [];
-      "photos.holmstens.com".extraDomains = [];
-      "vikunja.holmstens.com".extraDomains = [];
-      "ha.holmsten.xyz".extraDomains     = [];
+      "cloud.holmstens.com" = {};
+      "photos.holmstens.com" = {};
+      "vikunja.holmstens.com" = {};
+      "ha.holmsten.xyz" = {};
     };
   };
+
+  networking.firewall.allowedTCPPorts = lib.mkForce [ 80 443 ];
+
+  users.users.nginx.extraGroups = ["acme"];
 
   ###### Nginx service configuration ######
   services.nginx = {
@@ -37,10 +45,7 @@
     ssl_session_cache shared:MozSSL:10m;
     ssl_session_tickets off;
     ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:\
-ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:\
-ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:\
-DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
     ssl_prefer_server_ciphers off;
   '';
 
