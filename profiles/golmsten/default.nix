@@ -36,11 +36,13 @@
     hostId = "336bf6d7";
     firewall = {
       enable = true;
+      #11000 nextcloud aio
+      #2283 immich
       allowedTCPPorts = [
         2049
         111
-        11000 # Nextcloud AIO
-        2283 # Immich
+        11000
+        2283
       ];
       allowedUDPPorts = [
         2049
