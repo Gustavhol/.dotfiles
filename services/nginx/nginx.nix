@@ -5,7 +5,7 @@
   # Make sure to adjust the email address and accept terms.
   security.acme = {
     acceptTerms = true;
-    email = "admin@example.com";
+    email = "certbot@holmstens.com";
     # If you want separate certificate derivations for each domain
     # (instead of a single multi-SAN certificate), you can do that here:
     certs = {
