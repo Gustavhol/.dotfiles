@@ -7,22 +7,40 @@
     acceptTerms = true;
     defaults = {
       email = "certbot@holmstens.com";
+      webroot = "/var/lib/acme/acme-challenge";  # Add this globally
       server = "https://acme-staging-v02.api.letsencrypt.org/directory"; # Staging server
       # server = "https://acme-v02.api.letsencrypt.org/directory"; # Production server
     };
     # If you want separate certificate derivations for each domain
     # (instead of a single multi-SAN certificate), you can do that here:
     certs = {
-      "cloud.holmstens.com" = {};
-      "photos.holmstens.com" = {};
-      "vikunja.holmstens.com" = {};
-      "ha.holmsten.xyz" = {};
+      "cloud.holmstens.com" = {
+      # webroot = "/var/lib/acme/acme-challenge";
+      # listenHTTP = ":80";
+      # webroot = null;
+      };
+      "photos.holmstens.com" = {
+      # webroot = "/var/lib/acme/acme-challenge";
+      # listenHTTP = ":80";
+      # webroot = null;
+      };
+      "vikunja.holmstens.com" = {
+      # webroot = "/var/lib/acme/acme-challenge";
+      # listenHTTP = ":80";
+      # webroot = null;
+      };
+      "ha.holmsten.xyz" = {
+      # webroot = "/var/lib/acme/acme-challenge";
+      # listenHTTP = ":80";
+      # webroot = null;
+      };
     };
   };
 
   networking.firewall.allowedTCPPorts = lib.mkForce [ 80 443 ];
 
   users.users.nginx.extraGroups = ["acme"];
+  systemd.services.nginx.serviceConfig.SupplementaryGroups = [ "acme" ];
 
   ###### Nginx service configuration ######
   services.nginx = {
@@ -58,8 +76,20 @@
         # Enable Let’s Encrypt for this host
         enableACME = true;
         forceSSL   = true;  # automatically redirects HTTP -> HTTPS
+        # useACMEHost = "cloud.holmstens.com";
+        # sslTrustedCertificate = null; 
+        # useACMEHost = null;
 
         locations = {
+          "/.well-known/acme-challenge" = {
+            root = "/var/lib/acme/acme-challenge";
+            extraConfig = ''
+            allow all;
+            auth_basic off;
+            proxy_pass off;
+            try_files $uri =404;
+          '';
+          };
           "/" = {
             proxyPass = "http://192.168.1.9:11000";
 
@@ -98,22 +128,32 @@
         extraConfig = ''
           client_max_body_size 50000M;
         '';
+          locations = {
+            "/.well-known/acme-challenge" = {
+              root = "/var/lib/acme/acme-challenge";
+              extraConfig = ''
+              allow all;
+              auth_basic off;
+              proxy_pass off;
+              try_files $uri =404;
+            '';
+            };
+            "/" = {
+              proxyPass = "http://192.168.1.9:2283";
+              extraConfig = ''
+                proxy_set_header Host              $http_host;
+                proxy_set_header X-Real-IP         $remote_addr;
+                proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
 
-        locations."/" = {
-          proxyPass = "http://192.168.1.9:2283";
-          extraConfig = ''
-            proxy_set_header Host              $http_host;
-            proxy_set_header X-Real-IP         $remote_addr;
-            proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-
-            # WebSocket support
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "upgrade";
-            proxy_redirect off;
-          '';
-        };
+                # WebSocket support
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+                proxy_redirect off;
+              '';
+            };
+          };
       };
 
       ############################################################################
@@ -124,6 +164,15 @@
         forceSSL   = true;
 
         locations = {
+          "/.well-known/acme-challenge" = {
+            root = "/var/lib/acme/acme-challenge";
+            extraConfig = ''
+            allow all;
+            auth_basic off;
+            proxy_pass off;
+            try_files $uri =404;
+          '';
+          };
           # Root
           "/" = {
             proxyPass = "http://192.168.1.9:3456";
@@ -153,6 +202,15 @@
         '';
 
         locations = {
+          "/.well-known/acme-challenge" = {
+            root = "/var/lib/acme/acme-challenge";
+            extraConfig = ''
+            allow all;
+            auth_basic off;
+            proxy_pass off;
+            try_files $uri =404;
+          '';
+          };
           # Main location
           "/" = {
             proxyPass = "http://192.168.1.38:8123";

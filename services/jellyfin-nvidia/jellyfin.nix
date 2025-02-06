@@ -16,7 +16,7 @@
   };
 
   hardware = {
-    opengl.enable = true; # Required for hardware acceleration
+    graphics.enable = true; # Required for hardware acceleration
 
   };
 

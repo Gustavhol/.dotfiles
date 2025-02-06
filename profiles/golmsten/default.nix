@@ -21,7 +21,7 @@
     ./../../services/vikunja/vikunja.nix
     ./../../services/plasma6/plasma6.nix
     ./../../services/jellyfin-nvidia/jellyfin.nix
-    ./../../services/nginx/nginx.nix
+    # ./../../services/nginx/nginx.nix
   ];
 
   boot.supportedFilesystems = ["zfs"];

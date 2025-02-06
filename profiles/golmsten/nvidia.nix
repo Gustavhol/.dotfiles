@@ -6,6 +6,7 @@
       modesetting.enable = true;
       package = pkgs.linuxPackages.nvidiaPackages.beta;
       nvidiaSettings = true;
+      open = true;
     };
   };
   
