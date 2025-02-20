@@ -107,16 +107,16 @@
     (with pkgs; [
       alejandra
       angryipscanner
+      element-desktop
       grsync
       nfs-utils
       nixpkgs-fmt
       steam-run
       stremio
-    #  arduino-ide
+    # Arduino stuff
       esptool
       esptool-ck
       python3
-    #  python311Packages.pyserial
     ])
     ++ (with unstablePkgs; [
       ollama
