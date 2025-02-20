@@ -14,6 +14,7 @@
   ...
 }: {
   imports = [
+    ./backups.nix
     ./hardware-configuration.nix
     ./nvidia.nix
     ./../common/common-nixos.nix
