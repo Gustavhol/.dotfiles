@@ -34,13 +34,18 @@
     hostId = "336bf6d2";
     firewall = {
       enable = true;
-      #   allowedTCPPortRanges = [
-      #     { from = 1714; to = 1764; } # KDE Connect
-      #   ];
+         allowedTCPPorts = [
+           45876
+         ];
       #   allowedUDPPortRanges = [
       #     { from = 1714; to = 1764; } # KDE Connect
       #   ];
     };
+  };
+
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
   };
 
   services = {
