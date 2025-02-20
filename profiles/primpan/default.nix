@@ -29,7 +29,7 @@
   # };
 
   networking = {
-    hostName = "nix-nas";
+    hostName = "primpan";
     hostId = "336bf6d8";
     firewall = {
       enable = true;
