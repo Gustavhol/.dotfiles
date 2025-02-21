@@ -81,6 +81,7 @@
     flatpak
     fzf
     git
+    glances
     go
     gotop
     htop
@@ -125,7 +126,19 @@
 
   users.defaultUserShell = pkgs.zsh;
 
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+  };
+
   services = {
+    glances = {
+      enable = true;
+      extraArgs = [
+        "--webserver"
+      ];
+      openFirewall = true; # Port 61208
+    };
     openssh.enable = true;
     tailscale.enable = true;
     xserver = {

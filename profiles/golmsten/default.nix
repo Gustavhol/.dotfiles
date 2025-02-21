@@ -55,15 +55,12 @@
     };
   };
 
-  virtualisation.docker = {
-    enable = true;
-    enableOnBoot = true;
-  };
-
   services = {
     printing.enable = true;
     zfs = {
-      autoScrub.enable = true;
+      autoScrub = {
+        enable = true;
+        interval = "weekly";};
     };
     ollama = {
       enable = true;

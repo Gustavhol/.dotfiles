@@ -43,15 +43,16 @@
     };
   };
 
-  virtualisation.docker = {
-    enable = true;
-    enableOnBoot = true;
-  };
-
   services = {
     printing.enable = true;
-    flatpak.enable = true;
+    flatpak.enable = true;    
+    zfs = {
+      autoScrub = {
+        enable = true;
+        interval = "weekly";};
+    };
   };
+
 
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;

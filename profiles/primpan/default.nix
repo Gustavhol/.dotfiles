@@ -48,33 +48,11 @@
   };
 
   services = {
-    # Enable the X11 windowing system.
-    # xserver = {
-    #   enable = true;
-    #   xkb.layout = "se";
-    #   xkb.variant = "";
-    # };
-    # displayManager = {
-    #   sddm.enable = true;
-    #   sddm.wayland.enable = true;
-    #   autoLogin.enable = true;
-    #   autoLogin.user = "gustav";
-    # };
-    # desktopManager = {
-    #   plasma6.enable = true;
-    # };
-    printing.enable = true;
     zfs = {
-      autoScrub.enable = true;
+      autoScrub = {
+        enable = true;
+        interval = "weekly";};
     };
-    # ollama = {
-    #   enable = true;
-    #   package = unstablePkgs.ollama;
-    #   acceleration = "cuda";
-    # };
-    # flatpak = {
-    #   enable = true;
-    # };
     syncthing = {
       enable = true;
       dataDir = "/home/gustav";
@@ -88,7 +66,6 @@
 
   environment.systemPackages =
     (with pkgs; [
-      #  kdePackages.kdeconnect-kde
       angryipscanner
       grsync
       nfs-utils
