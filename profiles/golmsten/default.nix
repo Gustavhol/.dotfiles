@@ -118,8 +118,8 @@
       python3
     ])
     ++ (with unstablePkgs; [
-      ollama
-      fabric-ai
+    # ollama
+    # fabric-ai
     ]);
 
   system.stateVersion = "24.05"; # DO NOT CHANGE!!!

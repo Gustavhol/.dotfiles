@@ -27,11 +27,11 @@
     eza
     # orca-slicer
     flameshot
-    transmission
+    transmission_4
     vscode
     vlc
-    firefox
-    element-desktop-wayland
+    # firefox
+    element-desktop
     gnomeExtensions.gsconnect
     gnomeExtensions.touch-x
   ])
@@ -43,6 +43,7 @@
     obsidian
     rpi-imager
     spotify
+    vivaldi
   ]);
 
   home.file = {
@@ -61,6 +62,7 @@
   home.sessionVariables = {
       EDITOR = "nvim";
       TERM = "xterm-kitty";
+      NIXOS_OZONE_WL = "1";
   };
 
   dconf.settings = {
