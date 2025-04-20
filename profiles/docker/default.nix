@@ -22,14 +22,14 @@
 
   boot.supportedFilesystems = ["zfs"];
 
-  # fileSystems."/data" = {
-  #   device = "data";
-  #   fsType = "zfs";
-  #   options = [ "zfsutil" "noauto" ];
-  # };
+   fileSystems."/primpool" = {
+     device = "primpool";
+     fsType = "zfs";
+     options = [ "zfsutil" "noauto" ];
+   };
 
   networking = {
-    hostName = "primpan";
+    hostName = "docker";
     hostId = "336bf6d8";
     firewall = {
       enable = true;
@@ -66,8 +66,6 @@
 
   environment.systemPackages =
     (with pkgs; [
-      angryipscanner
-      grsync
       nfs-utils
     ])
     ++ (with unstablePkgs; [
@@ -75,5 +73,5 @@
 
   # programs.kdeconnect.enable = true;
 
-  system.stateVersion = "24.05"; # DO NOT CHANGE!!!
+  system.stateVersion = "24.11"; # DO NOT CHANGE!!!
 }
