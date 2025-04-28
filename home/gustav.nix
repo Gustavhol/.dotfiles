@@ -11,6 +11,7 @@
     inputs.nixvim.homeManagerModules.nixvim
     ./app/alacritty.nix
     ./app/git.nix
+    ./app/kitty.nix
     ./app/nixvim.nix
     ./app/zsh.nix
   ];
