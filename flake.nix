@@ -70,7 +70,8 @@
             };
             modules = [ 
               ./profiles/${hostname}
-               ({ config, pkgs, ...}: {
+               ({ config, pkgs, unstablePkgs, ...}: {
+                boot.kernelPackages = unstablePkgs.linuxPackages_6_12;
           # install the overlay
                  nixpkgs.overlays = [ alacritty-theme.overlays.default ];
                })

@@ -1,10 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, unstablePkgs, ... }:
 
 {
   hardware = {
     nvidia = {
       modesetting.enable = true;
-      package = pkgs.linuxPackages.nvidiaPackages.beta;
+      package = unstablePkgs.linuxPackages_6_12.nvidiaPackages.beta;
       nvidiaSettings = true;
       open = true;
     };

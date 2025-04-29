@@ -11,6 +11,7 @@
   nix-colors,
   nixvim,
   vscode-server,
+  lib,
   ...
 }: {
   imports = [
@@ -20,12 +21,16 @@
     ./../common/common-nixos.nix
     ./../common/pipewire.nix
     ./../../services/vikunja/vikunja.nix
+    # ./../../services/gnome/gnome.nix
     ./../../services/plasma6/plasma6.nix
     ./../../services/jellyfin-nvidia/jellyfin.nix
     # ./../../services/nginx/nginx.nix
   ];
 
-  boot.supportedFilesystems = ["zfs"];
+  boot = {
+    supportedFilesystems = ["zfs"];
+    # kernelPackages = unstablePkgs.linuxPackages_6_12;
+  };
 
   fileSystems."/data" = {
     device = "data";
@@ -53,6 +58,10 @@
         111
       ];
     };
+  };
+
+    users.users.${userSettings.username} = {
+    hashedPassword = lib.mkForce "$6$a5oZjDb6.lIXkAeY$Y6yL2.wqgIYeRvNYv2no2NOgqTkWAifpw8eREkePeVUJTSEpKEqdBhAwGrM2bL8Zhe9bne2xmCX7dvW7IlwWb0";
   };
 
   services = {
@@ -85,6 +94,16 @@
         /data/media 192.168.1.0/24(rw,sync,no_subtree_check)
       '';
     };
+    code-server = {
+      enable = true;
+    };
+    stirling-pdf = {
+      enable = true;
+    };
+    wiki-js = {
+      enable = true;
+      settings.db.host = "golmsten";
+    };
   };
 
   # nixpkgs.overlays = [
@@ -106,15 +125,20 @@
     (with pkgs; [
       alejandra
       angryipscanner
+      code-server
       element-desktop
+      freecad-wayland
       grsync
       nfs-utils
+      nh
       nixpkgs-fmt
       spice-vdagent
       steam-run
+      stirling-pdf
       stremio
       virt-manager
       virt-viewer
+      zed-editor
     # Arduino stuff
       esptool
       esptool-ck
