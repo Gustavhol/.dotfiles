@@ -25,6 +25,7 @@
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
     auto-optimise-store = true;
+    download-buffer-size = 500000000;
   };
 
   nix.gc = {
