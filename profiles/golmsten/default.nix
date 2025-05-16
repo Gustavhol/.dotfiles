@@ -99,6 +99,7 @@
     };
     stirling-pdf = {
       enable = true;
+      environment = { INSTALL_BOOK_AND_ADVANCED_HTML_OPS = "true"; SERVER_PORT = 8089; };
     };
     wiki-js = {
       enable = true;
@@ -136,6 +137,7 @@
       steam-run
       stirling-pdf
       stremio
+      unrar
       virt-manager
       virt-viewer
       zed-editor
