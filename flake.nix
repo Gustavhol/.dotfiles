@@ -84,7 +84,7 @@
         elitedesk = nixosSystem "x86_64-linux" "elitedesk" "gustav";
         starlite = nixosSystem "x86_64-linux" "starlite" "gustav";
         golmsten = nixosSystem "x86_64-linux" "golmsten" "gustav";
-        nix-nas = nixosSystem "x86_64-linux" "primpan" "gustav";
+        docker = nixosSystem "x86_64-linux" "docker" "gustav";
       # probook = nixosSystem "x86_64-linux" "probook" "gustav";
       };
       homeConfigurations = {

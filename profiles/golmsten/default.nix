@@ -110,8 +110,11 @@
       grsync
       nfs-utils
       nixpkgs-fmt
+      spice-vdagent
       steam-run
       stremio
+      virt-manager
+      virt-viewer
     # Arduino stuff
       esptool
       esptool-ck

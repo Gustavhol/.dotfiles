@@ -92,9 +92,9 @@
 
   systemd.timers = {
     backup-nextcloud = {
-      description = "Timer for daily backup at 05:00";
+      description = "Timer for daily backup at 06:00";
       timerConfig = {
-        OnCalendar = "*-*-* 05:00:00";
+        OnCalendar = "*-*-* 06:00:00";
         Persistent = true;
       };
       wantedBy = ["timers.target"];
