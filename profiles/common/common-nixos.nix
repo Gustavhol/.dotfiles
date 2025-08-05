@@ -10,10 +10,10 @@
   inputs,
   ...
 }: {
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
+  # nixpkgs.config = {
+  #   allowUnfree = true;
+  #   allowUnfreePredicate = _: true;
+  # };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -88,7 +88,7 @@
     htop
     jq
     just
-    kio-admin
+    kdePackages.kio-admin
     kitty
     mpv
     nil
@@ -106,9 +106,9 @@
 
   fonts.packages = with pkgs; [
     fira-code
-    nerdfonts
+    # nerdfonts
     noto-fonts
-  ];
+  ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
   programs = {
     zsh = {

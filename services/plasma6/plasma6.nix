@@ -34,6 +34,7 @@
 
   environment.systemPackages = with pkgs; [
     kdePackages.kdeconnect-kde
+    kdePackages.kio-admin
   ];
 
   programs.kdeconnect.enable = true;
