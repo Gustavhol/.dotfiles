@@ -119,6 +119,7 @@
       starlite  = mkHost "starlite";
       golmsten  = mkHost "golmsten";
       docker    = mkHost "docker";
+      probook	= mkHost "probook";
     };
 
     ################################################################
