@@ -18,6 +18,7 @@
     ./backups.nix
     ./hardware-configuration.nix
     ./nvidia.nix
+    ./samba.nix
     ./../common/common-nixos.nix
     ./../common/pipewire.nix
     ./../../services/vikunja/vikunja.nix
@@ -29,14 +30,15 @@
 
   boot = {
     supportedFilesystems = ["zfs"];
+    zfs.extraPools = [ "data" ];
     # kernelPackages = unstablePkgs.linuxPackages_6_12;
   };
 
-  fileSystems."/data" = {
-    device = "data";
-    fsType = "zfs";
-    options = ["zfsutil" "noauto"];
-  };
+  # fileSystems."/data" = {
+  #   device = "data";
+  #   fsType = "zfs";
+  #   options = ["zfsutil" "noauto"];
+  # };
 
   networking = {
     hostName = "golmsten";
@@ -127,12 +129,15 @@
       alejandra
       angryipscanner
       code-server
+      dolphin-emu
       element-desktop
       freecad-wayland
       grsync
       nfs-utils
       nh
       nixpkgs-fmt
+      ryujinx-greemdev
+      shipwright
       spice-vdagent
       steam-run
       stirling-pdf
