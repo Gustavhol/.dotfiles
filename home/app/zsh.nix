@@ -21,7 +21,7 @@
       hmsf = "home-manager switch --flake .";
       nrsf = "sudo nixos-rebuild switch --flake .";
     };
-    initExtra = ''
+    initContent = ''
       ssht() { ssh -t "$1" "export TERM=xterm-color; /bin/bash"; }
       sshz() { ssh -t "$1" "export TERM=xterm-color; /run/current-system/sw/bin/zsh"; }
       '';
