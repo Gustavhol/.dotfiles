@@ -11,8 +11,8 @@
     profiles.default.extensions = with pkgs.vscode-extensions; [
       bbenoist.nix
       jnoortheen.nix-ide
-      william-voyek.vscode-nginx
-      teclado.vscode-nginx-formatter
+      # william-voyek.vscode-nginx
+      # teclado.vscode-nginx-formatter
       tailscale.vscode-tailscale
       ms-python.python
       ms-vscode.cpptools
@@ -20,7 +20,6 @@
       ms-azuretools.vscode-docker
       esbenp.prettier-vscode
       dbaeumer.vscode-eslint
-      ms-vscode.vscode-typescript-next
     ];
 
     profiles.gustav.userSettings = {
