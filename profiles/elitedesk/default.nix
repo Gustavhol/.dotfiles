@@ -22,12 +22,13 @@
   ];
 
   boot.supportedFilesystems = ["zfs"];
+  zfs.extraPools = [ "backups" ];
 
-  fileSystems."/mnt/backups" = {
-    device = "backups";
-    fsType = "zfs";
-    options = ["zfsutil" "noauto"];
-  };
+  # fileSystems."/mnt/backups" = {
+  #   device = "backups";
+  #   fsType = "zfs";
+  #   options = ["zfsutil" "noauto"];
+  # };
 
   networking = {
     hostName = "elitedesk"; # Define your hostname.
