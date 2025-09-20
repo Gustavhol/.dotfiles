@@ -21,8 +21,10 @@
     ./../../services/plasma6/plasma6.nix
   ];
 
-  boot.supportedFilesystems = ["zfs"];
-  zfs.extraPools = [ "backups" ];
+  boot = { 
+    supportedFilesystems = ["zfs"];
+    zfs.extraPools = [ "backups" ];
+  };
 
   # fileSystems."/mnt/backups" = {
   #   device = "backups";
