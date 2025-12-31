@@ -3,19 +3,19 @@
 
   inputs = {
     # Stable Nixpkgs for NixOS
-    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-25.05"; };
+    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-25.11"; };
 
     # Unstable for occasional apps
     nixpkgs-unstable = { url = "github:NixOS/nixpkgs/nixos-unstable"; };
 
     # Home Manager standalone
     home-manager = {
-      url                   = "github:nix-community/home-manager/release-25.05";
+      url                   = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Third-party NixOS modules
-    nixvim = { url = "github:nix-community/nixvim/nixos-25.05"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nixvim = { url = "github:nix-community/nixvim/nixos-25.11"; inputs.nixpkgs.follows = "nixpkgs"; };
     vscode-server = { url = "github:nix-community/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
 
     # Overlays & themes
@@ -70,6 +70,7 @@
         allowUnfree = true;
         allowUnfreePredicate = _: true;
         permittedInsecurePackages = [
+          "qtwebengine-5.15.19"
           "libsoup-2.74.3"
         ];
       };
@@ -89,6 +90,7 @@
         nixpkgs.config.allowUnfree = true;
         nixpkgs.config.allowUnfreePredicate = _: true;
         nixpkgs.config.permittedInsecurePackages = [
+          "qtwebengine-5.15.19"
           "libsoup-2.74.3"
         ];
 
@@ -103,7 +105,8 @@
     mkHost = host: nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit pkgs unstablePkgs systemSettings userSettings inputs;
+        # inherit pkgs unstablePkgs systemSettings userSettings inputs;
+        inherit unstablePkgs systemSettings userSettings inputs;
         customArgs = { inherit host; };  # if your profiles use "host"
       };
       modules = [

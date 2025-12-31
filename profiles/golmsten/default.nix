@@ -127,7 +127,7 @@
   environment.systemPackages =
     (with pkgs; [
       alejandra
-      angryipscanner
+      # angryipscanner
       code-server
       dolphin-emu
       element-desktop
@@ -136,7 +136,7 @@
       nfs-utils
       nh
       nixpkgs-fmt
-      ryujinx-greemdev
+      ryubing
       shipwright
       spice-vdagent
       steam-run

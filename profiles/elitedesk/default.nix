@@ -19,6 +19,9 @@
     ./../common/common-nixos.nix
     ./../common/pipewire.nix
     ./../../services/plasma6/plasma6.nix
+  ];  
+  nixpkgs.config.permittedInsecurePackages = [
+    "qtwebengine-5.15.19"
   ];
 
   boot = { 
@@ -64,7 +67,7 @@
 
   environment.systemPackages = with pkgs; [
     alejandra
-    angryipscanner
+    # angryipscanner
     kitty
     nfs-utils
     nixd
