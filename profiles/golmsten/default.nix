@@ -141,7 +141,7 @@
       spice-vdagent
       steam-run
       stirling-pdf
-      stremio
+      # stremio
       unrar
       virt-manager
       virt-viewer
