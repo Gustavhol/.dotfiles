@@ -107,6 +107,10 @@
       enable = true;
       settings.db.host = "golmsten";
     };
+    sunshine = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
   # nixpkgs.overlays = [
