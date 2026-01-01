@@ -83,6 +83,7 @@
     gnomeExtensions.screen-rotate # see https://www.reddit.com/r/starlabs_computers/comments/1dyebde/starlite_mkv_autorotate_solution/
     krita
     flashrom
+    moonlight-qt
   ];
 
   programs.kdeconnect = {

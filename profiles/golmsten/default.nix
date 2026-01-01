@@ -137,6 +137,7 @@
       element-desktop
       freecad-wayland
       grsync
+      moonlight-qt
       nfs-utils
       nh
       nixpkgs-fmt
