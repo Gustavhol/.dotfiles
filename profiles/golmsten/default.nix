@@ -107,7 +107,7 @@
       enable = true;
       settings.db.host = "golmsten";
     };
-    sunshine = {
+    rustdesk-server = {
       enable = true;
       openFirewall = true;
     };
@@ -137,7 +137,6 @@
       element-desktop
       freecad-wayland
       grsync
-      moonlight-qt
       nfs-utils
       nh
       nixpkgs-fmt
