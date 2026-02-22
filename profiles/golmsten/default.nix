@@ -107,10 +107,6 @@
       enable = true;
       settings.db.host = "golmsten";
     };
-    rustdesk-server = {
-      enable = true;
-      openFirewall = true;
-    };
   };
 
   # nixpkgs.overlays = [
@@ -140,6 +136,7 @@
       nfs-utils
       nh
       nixpkgs-fmt
+      rustdesk
       ryubing
       shipwright
       spice-vdagent

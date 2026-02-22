@@ -62,7 +62,7 @@
     isNormalUser = true;
     description = userSettings.name;
     hashedPassword = "$y$j9T$GDQYpeHXABiM.DhOJbDDq.$WpAwWEHSj7xdoDyHn0.mIIz/PaOVWRFcEAl6bO2hQk6";
-    extraGroups = ["networkmanager" "wheel" "docker" "dialout" "tty"];
+    extraGroups = ["networkmanager" "wheel" "docker" "dialout" "tty" "video" "render"];
     packages =
       (with pkgs; [
         syncthing
