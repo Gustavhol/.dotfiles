@@ -29,6 +29,16 @@
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
+  systemd.targets."tpm2".enable = false;
+  systemd.services."systemd-tpm2-setup".enable = false;
+  systemd.services."systemd-tpm2-setup-early".enable = false;
+
+  boot.blacklistedKernelModules = [
+    "tpm"
+    "tpm_crb"
+    "tpm_tis"
+    "tpm_tis_core"
+  ];
 
   services = {
       libinput.enable = true;
@@ -73,6 +83,7 @@
     gnomeExtensions.screen-rotate # see https://www.reddit.com/r/starlabs_computers/comments/1dyebde/starlite_mkv_autorotate_solution/
     krita
     flashrom
+    rustdesk
   ];
 
   programs.kdeconnect = {

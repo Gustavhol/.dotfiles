@@ -19,15 +19,21 @@
     ./../common/common-nixos.nix
     ./../common/pipewire.nix
     ./../../services/plasma6/plasma6.nix
+  ];  
+  nixpkgs.config.permittedInsecurePackages = [
+    "qtwebengine-5.15.19"
   ];
 
-  boot.supportedFilesystems = ["zfs"];
-
-  fileSystems."/mnt/backups" = {
-    device = "backups";
-    fsType = "zfs";
-    options = ["zfsutil" "noauto"];
+  boot = { 
+    supportedFilesystems = ["zfs"];
+    zfs.extraPools = [ "backups" ];
   };
+
+  # fileSystems."/mnt/backups" = {
+  #   device = "backups";
+  #   fsType = "zfs";
+  #   options = ["zfsutil" "noauto"];
+  # };
 
   networking = {
     hostName = "elitedesk"; # Define your hostname.
@@ -61,7 +67,7 @@
 
   environment.systemPackages = with pkgs; [
     alejandra
-    angryipscanner
+    # angryipscanner
     kitty
     nfs-utils
     nixd
