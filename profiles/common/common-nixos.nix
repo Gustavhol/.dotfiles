@@ -121,6 +121,10 @@
       enable = true;
       binfmt = true;
     };
+    nix-ld = {
+      enable = true;
+    };
+
   };
 
   environment.shells = with pkgs; [zsh];
