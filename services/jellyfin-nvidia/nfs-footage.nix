@@ -10,10 +10,10 @@
 { config, pkgs, lib, ... }:
 
 {
-  # NFS client tools. nfs-utils is already in environment.systemPackages in
-  # profiles/golmsten/default.nix, so nothing extra is needed; the modern
-  # option is services.nfs-client (nixpkgs.nfs was removed upstream).
-  # services.nfs-client.enable = true;  # does not exist; nfs-utils is in systemPackages
+  # NOTE: nixpkgs 25.11 defines no NFS *client* option - only services.nfs.server
+  # (see nixos/modules/services/network-filesystems/nfsd.nix). The client tools
+  # (mount.nfs) come from nfs-utils, which is already in
+  # environment.systemPackages in profiles/golmsten/default.nix.
 
   fileSystems."/mnt/probook-footage" = {
     device = "100.111.21.56:/home/gustav/footage-h264";
