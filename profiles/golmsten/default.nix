@@ -25,6 +25,7 @@
     # ./../../services/gnome/gnome.nix
     ./../../services/plasma6/plasma6.nix
     ./../../services/jellyfin-nvidia/jellyfin.nix
+    ./../../services/jellyfin-nvidia/nfs-footage.nix
     # ./../../services/nginx/nginx.nix
   ];
 
