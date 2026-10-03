@@ -13,7 +13,7 @@
   # NFS client tools. nfs-utils is already in environment.systemPackages in
   # profiles/golmsten/default.nix, so nothing extra is needed; the modern
   # option is services.nfs-client (nixpkgs.nfs was removed upstream).
-  services.nfs-client.enable = true;
+  # services.nfs-client.enable = true;  # does not exist; nfs-utils is in systemPackages
 
   fileSystems."/mnt/probook-footage" = {
     device = "100.111.21.56:/home/gustav/footage-h264";
