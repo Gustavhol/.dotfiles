@@ -42,13 +42,11 @@
   # probook's 0644/0755 files without needing root or ACLs on probook.
   users.users.jellyfin = {
     uid = 1000;
-    gid = 1000;
+    group = "nfs-footage";   # gid 1000, matching probook's gustav
     description = "Jellyfin media server (NFS footage access)";
+    extraGroups = [ "video" ];   # hardware accel if transcoding is ever needed
   };
 
-  # Give the jellyfin group the gid it will be referenced by.
-  users.groups.jellyfin = { gid = 990; };
-
-  # hardware accel for on-the-fly transcode if ever needed
-  users.extraGroups.video.members = [ "jellyfin" ];
+  # gid 1000 matches probook's gustav group, so sec=sys file ownership lines up.
+  users.groups.nfs-footage = { gid = 1000; };
 }
