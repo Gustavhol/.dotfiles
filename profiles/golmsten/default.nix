@@ -75,8 +75,7 @@
     };
     ollama = {
       enable = true;
-      package = unstablePkgs.ollama;
-      acceleration = "cuda";
+      package = unstablePkgs.ollama-cuda;
     };
     flatpak = {
       enable = true;

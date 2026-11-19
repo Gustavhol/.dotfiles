@@ -3,19 +3,19 @@
 
   inputs = {
     # Stable Nixpkgs for NixOS
-    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-25.11"; };
+    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-26.05"; };
 
     # Unstable for occasional apps
     nixpkgs-unstable = { url = "github:NixOS/nixpkgs/nixos-unstable"; };
 
     # Home Manager standalone
     home-manager = {
-      url                   = "github:nix-community/home-manager/release-25.11";
+      url                   = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Third-party NixOS modules
-    nixvim = { url = "github:nix-community/nixvim/nixos-25.11"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nixvim = { url = "github:nix-community/nixvim/nixos-26.05"; inputs.nixpkgs.follows = "nixpkgs"; };
     vscode-server = { url = "github:nix-community/nixos-vscode-server"; inputs.nixpkgs.follows = "nixpkgs"; };
 
     # Overlays & themes

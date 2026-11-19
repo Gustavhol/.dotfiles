@@ -33,7 +33,6 @@
   # Packages: stable pkgs + a few unstable apps
   home.packages =
     (with pkgs; [
-      lunarvim
       unicode-emoji
       starship
       eza
