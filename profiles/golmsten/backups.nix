@@ -14,7 +14,7 @@
         # Disable 'errexit' so we can capture rsync's exit code.
         set +e
         # OUTPUT=$(rsync -a -vv -e ssh /data/nextcloud_backup/borg root@100.66.227.91:/mnt/backups/nextcloud_aio 2>&1)
-        OUTPUT=$(rsync -a -vv -e ssh /data/nextcloud_backup/borg root@100.66.227.91:/tank/nextcloud_aio 2>&1)
+        OUTPUT=$(rsync -a -vv -e ssh /data/nextcloud_backup/borg root@100.66.227.91:/mnt/backups/nextcloud_aio 2>&1)
         EXIT_CODE=$?
         set -e
 
@@ -53,7 +53,7 @@
         # Disable 'errexit' so we can capture rsync's exit code.
         set +e
         #  OUTPUT=$(rsync -a -vv -e ssh /data/immich/photos root@100.66.227.91:/mnt/backups/immich_data 2>&1)
-        OUTPUT=$(rsync -a -vv -e ssh /data/immich/photos root@100.66.227.91:/tank/immich_data 2>&1)
+        OUTPUT=$(rsync -a -vv -e ssh /data/immich/photos root@100.66.227.91:/mnt/backups/immich_data 2>&1)
         EXIT_CODE=$?
         set -e
 
