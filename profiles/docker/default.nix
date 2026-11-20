@@ -22,6 +22,14 @@
 
   boot.supportedFilesystems = ["zfs"];
 
+  # 26.05 dropped the `zfs-import.target -> pool` dependency edge that 24.11 generated, so a pool
+  # referenced only from a `noauto` fileSystems entry is no longer imported at boot. Declaring it as
+  # an extra pool is what wires the import back into boot. Without this, /primpool never mounts and
+  # the containers start against an empty directory on the root filesystem (Docker creates missing
+  # bind-mount sources) — open-webui then initialises a fresh database and serves it as if it were
+  # your data.
+  boot.zfs.extraPools = ["primpool"];
+
    fileSystems."/primpool" = {
      device = "primpool";
      fsType = "zfs";
