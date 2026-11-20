@@ -37,10 +37,10 @@
   nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 
   # Rebuilds run as root over Tailscale SSH, and git refuses a repo owned by another user
-  # ("dubious ownership"). Declaring it here writes /etc/gitconfig, so root can pull and rebuild on
-  # any host without the per-host `git config --global --add safe.directory ...` step.
-  # `enable` is mandatory: the module gates environment.etc.gitconfig behind it, so setting only
-  # `config` silently writes no file at all (verified 2026-11-20).
+  # ("dubious ownership"), so each host otherwise needs a one-off
+  # `git config --global --add safe.directory ...` before it can pull. Declaring it here writes
+  # /etc/gitconfig for every host on this branch. `enable` is mandatory: the module gates
+  # environment.etc.gitconfig behind it, so setting only `config` writes no file at all.
   programs.git = {
     enable = true;
     config.safe.directory = ["/home/gustav/.dotfiles"];
