@@ -36,6 +36,16 @@
 
   nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 
+  # Rebuilds run as root over Tailscale SSH, and git refuses a repo owned by another user
+  # ("dubious ownership"), so each host otherwise needs a one-off
+  # `git config --global --add safe.directory ...` before it can pull. Declaring it here writes
+  # /etc/gitconfig for every host on this branch. `enable` is mandatory: the module gates
+  # environment.etc.gitconfig behind it, so setting only `config` writes no file at all.
+  programs.git = {
+    enable = true;
+    config.safe.directory = ["/home/gustav/.dotfiles"];
+  };
+
   networking.networkmanager.enable = true;
   #  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
