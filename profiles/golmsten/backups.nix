@@ -17,7 +17,13 @@
 
         # Disable 'errexit' so we can capture rsync's exit code.
         set +e
-        rsync -a -e "ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new" \
+        # --delete-after keeps the mirror honest: AIO prunes AND compacts the repository on every
+        # run (default retention --keep-within=7d --keep-weekly=4 --keep-monthly=6, seen in the
+        # nextcloud-aio-borgbackup container's log). Without --delete the destination would retain
+        # every segment AIO has ever pruned and grow without bound while the source stays bounded.
+        # 'after' matters: deletions happen only once the transfer has completed, so an interrupted
+        # or failed run can never strip data from the only off-host copy.
+        rsync -a --delete-after -e "ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new" \
           /data/nextcloud_backup/borg root@100.90.17.92:/primpool/nextcloud_aio \
           > /tmp/backup-nextcloud.log 2>&1
         EXIT_CODE=$?
