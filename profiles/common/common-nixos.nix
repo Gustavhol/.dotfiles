@@ -36,6 +36,11 @@
 
   nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 
+  # Rebuilds run as root over Tailscale SSH, and git refuses a repo owned by another user
+  # ("dubious ownership"). Declaring it here writes /etc/gitconfig, so root can pull and rebuild on
+  # any host without the per-host `git config --global --add safe.directory ...` step.
+  programs.git.config.safe.directory = ["/home/gustav/.dotfiles"];
+
   networking.networkmanager.enable = true;
   #  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 

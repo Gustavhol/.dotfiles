@@ -59,6 +59,16 @@
     enableOnBoot = true;
   };
 
+  # Never let containers start against something that is not the pool. Docker creates a missing
+  # bind-mount source, so an unmounted /primpool silently becomes an empty data directory and
+  # open-webui initialises a fresh database and serves it (happened 2026-11-20). Ordered after
+  # zfs-mount.service so the condition is evaluated once ZFS has actually mounted the dataset,
+  # not in a race with it.
+  systemd.services.docker = {
+    after = [ "zfs-mount.service" ];
+    unitConfig.ConditionPathIsMountPoint = "/primpool";
+  };
+
   services = {
     zfs = {
       autoScrub = {
