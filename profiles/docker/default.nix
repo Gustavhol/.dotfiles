@@ -22,18 +22,19 @@
 
   boot.supportedFilesystems = ["zfs"];
 
-  # 26.05 dropped the `zfs-import.target -> pool` dependency edge that 24.11 generated, so a pool
-  # referenced only from a `noauto` fileSystems entry is no longer imported at boot. Declaring it as
-  # an extra pool is what wires the import back into boot. Without this, /primpool never mounts and
-  # the containers start against an empty directory on the root filesystem (Docker creates missing
-  # bind-mount sources) — open-webui then initialises a fresh database and serves it as if it were
-  # your data.
-  boot.zfs.extraPools = ["primpool"];
-
+  # A pool is imported at boot only when its mount is NOT `noauto`: the generated
+  # `zfs-import-<pool>.service` picks up `zfs-import.target` via
+  # `lib.optional (!noauto) "zfs-import.target"` (nixpkgs zfs.nix). With `noauto`, nothing pulls the
+  # import in at boot, /primpool never mounts, and the containers start against an empty directory on
+  # the root filesystem — Docker creates a missing bind-mount source — so open-webui initialises a
+  # fresh database and serves that as if it were your data. That is exactly what happened on the
+  # first 26.05 boot on 2026-11-20.
+  # `boot.zfs.extraPools` does NOT fix this: it only adds pools to the generated-unit list, it does
+  # not change the noauto condition.
    fileSystems."/primpool" = {
      device = "primpool";
      fsType = "zfs";
-     options = [ "zfsutil" "noauto" ];
+     options = [ "zfsutil" ];
    };
 
   networking = {
