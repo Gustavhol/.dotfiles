@@ -33,7 +33,15 @@
         # argument: megabytes in one argv entry fail with "Argument list too long" (exit 126), so the
         # alert itself becomes the failure and the outage goes unreported. That is how these backups
         # stayed broken and unannounced for three months (Daily 2026-11-19).
-        if [ "$EXIT_CODE" -ne 0 ]; then
+        # rsync exit 24 = "some files vanished before they could be transferred". For a mirror of a
+        # live borg repository that is a normal outcome, not a failure: AIO prunes AND compacts on
+        # every run (see above), so segments can disappear while rsync is walking the tree. It is how
+        # the 2026-11-21 run ended (exit 24): the retention change made that compact 3h24m long, so
+        # it overlapped the 06:00 start. Alerting on it trains the reader to ignore the alert, which
+        # is the exact failure mode that hid a three-month backup outage (Daily 2026-11-19).
+        if [ "$EXIT_CODE" -eq 24 ]; then
+            echo "rsync exited 24 (some files vanished mid-transfer) — transfer completed; the destination stays a superset until a run reads an unmodified source"
+        elif [ "$EXIT_CODE" -ne 0 ]; then
             curl -s -d "Nextcloud backup failed: [rsync exit $EXIT_CODE] $(tail -c 1500 /tmp/backup-nextcloud.log)" \
               https://ntfy.sh/holmsten-backup || true
             exit "$EXIT_CODE"
@@ -55,7 +63,11 @@
         EXIT_CODE=$?
         set -e
 
-        if [ "$EXIT_CODE" -ne 0 ]; then
+        # rsync exit 24 = "some files vanished before they could be transferred", which happens when
+        # the dumper rotates old dumps out mid-run. That is a completed transfer, not a failure.
+        if [ "$EXIT_CODE" -eq 24 ]; then
+            echo "rsync exited 24 (some files vanished mid-transfer) — transfer completed"
+        elif [ "$EXIT_CODE" -ne 0 ]; then
             curl -s -d "Immich DB backup failed: [rsync exit $EXIT_CODE] $(tail -c 1500 /tmp/backup-immich-db.log)" \
               https://ntfy.sh/holmsten-backup || true
             exit "$EXIT_CODE"
@@ -75,7 +87,12 @@
         EXIT_CODE=$?
         set -e
 
-        if [ "$EXIT_CODE" -ne 0 ]; then
+        # rsync exit 24 = "some files vanished before they could be transferred". The photo library is
+        # mostly static, but a file removed while rsync walks it still ends the run at 24 — a
+        # completed transfer, not a failure.
+        if [ "$EXIT_CODE" -eq 24 ]; then
+            echo "rsync exited 24 (some files vanished mid-transfer) — transfer completed"
+        elif [ "$EXIT_CODE" -ne 0 ]; then
             curl -s -d "Immich Data backup failed: [rsync exit $EXIT_CODE] $(tail -c 1500 /tmp/backup-immich.log)" \
               https://ntfy.sh/holmsten-backup || true
             exit "$EXIT_CODE"
