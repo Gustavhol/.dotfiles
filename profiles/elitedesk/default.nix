@@ -47,6 +47,16 @@
       #     { from = 1714; to = 1764; } # KDE Connect
       #   ];
     };
+
+    # wlp1s0 is a redundant second path that turned out not to be inert. eno1 already carries the
+    # default route (metric 100 against wlp1s0's 600) and every route this host actually uses, so
+    # nothing depends on the wireless. But both interfaces sit on 192.168.1.0/24, which lets
+    # traffic arrive over either one — and that is why elitedesk had the jitteriest path to
+    # golmsten of the three hosts measured on 2026-11-23 (3.036/8.447/18.551 ms, mdev 6.005,
+    # against 3.281/3.677/4.291, mdev 0.404 from primpan, both same switch as this host).
+    # Hand the device to nobody rather than letting NetworkManager keep a live connection on it.
+    # Verified against the NixOS manual, which uses the same `interface-name:` device spec.
+    networkmanager.unmanaged = [ "interface-name:wlp1s0" ];
   };
 
   services = {
