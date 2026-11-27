@@ -100,6 +100,61 @@
       '';
       mode = "0755";
     };
+
+    # Vikunja (Docker) Postgres dumps. The native NixOS Vikunja that the old unit guarded was
+    # retired on 2026-11-27; this job covers the database the agents actually use, which lives in
+    # the app-vikunja-db container. Left unrotated a daily dump grows forever, so keep 14 and prune,
+    # then copy the set off-host beside the Immich mirrors.
+    "backup-vikunja-db.sh" = {
+      text = ''
+        #!/usr/bin/env bash
+        set -euo pipefail
+
+        OUT=/data/vikunja_backup/db_dumps
+        KEEP=14
+        ALERT=https://ntfy.sh/holmsten-backup
+        TS=$(date +%Y%m%dT%H%M%S)
+        FILE="$OUT/vikunja-$TS.dump"
+
+        mkdir -p "$OUT"
+
+        # Dump through the container's own PostgreSQL over its local socket: no password is needed
+        # and none is stored anywhere.
+        if ! docker exec app-vikunja-db pg_dump -U vikunja -d vikunja -Fc > "$FILE" 2>/tmp/backup-vikunja-db.err; then
+            rm -f "$FILE"
+            curl -s -d "Vikunja DB dump failed: $(tail -c 1000 /tmp/backup-vikunja-db.err)" "$ALERT" || true
+            exit 1
+        fi
+
+        # A dump nobody can read is not a backup: prove pg_restore can parse its table of contents.
+        if ! docker exec -i app-vikunja-db pg_restore --list < "$FILE" > /tmp/backup-vikunja-db.toc 2>/tmp/backup-vikunja-db.err; then
+            curl -s -d "Vikunja DB dump is unreadable, pg_restore --list failed: $(tail -c 1000 /tmp/backup-vikunja-db.err)" "$ALERT" || true
+            exit 1
+        fi
+        echo "wrote $FILE ($(wc -c < "$FILE") bytes, $(wc -l < /tmp/backup-vikunja-db.toc) TOC entries)"
+
+        # Rotation: keep the newest $KEEP dumps.
+        ls -1t "$OUT"/vikunja-*.dump 2>/dev/null | tail -n +$((KEEP + 1)) | xargs -r rm -f
+
+        # Off-host copy to elitedesk, beside the Immich mirrors. --delete-after so the destination
+        # follows the local rotation instead of accumulating pruned dumps, and so deletions only
+        # happen once the transfer has completed.
+        set +e
+        rsync -a --delete-after -e "ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new" \
+          /data/vikunja_backup/db_dumps/ root@100.66.227.91:/mnt/backups/vikunja_db/ \
+          > /tmp/backup-vikunja-db.log 2>&1
+        EXIT_CODE=$?
+        set -e
+
+        if [ "$EXIT_CODE" -eq 24 ]; then
+            echo "rsync exited 24 (some files vanished mid-transfer) — transfer completed"
+        elif [ "$EXIT_CODE" -ne 0 ]; then
+            curl -s -d "Vikunja DB off-host copy failed: [rsync exit $EXIT_CODE] $(tail -c 1500 /tmp/backup-vikunja-db.log)" "$ALERT" || true
+            exit "$EXIT_CODE"
+        fi
+      '';
+      mode = "0755";
+    };
   };
 
   systemd.services = {
@@ -121,6 +176,13 @@
       description = "Daily Immich photo backup via rsync over ssh on tailnet -> elitedesk";
       serviceConfig = {
         ExecStart = "${pkgs.bash}/bin/bash /etc/backup-immich.sh";
+        Environment = "PATH=/run/current-system/sw/bin:/usr/bin:/bin HOME=/root";
+      };
+    };
+    backup-vikunja-db = {
+      description = "Daily Vikunja (Docker) Postgres dump plus off-host copy to elitedesk";
+      serviceConfig = {
+        ExecStart = "${pkgs.bash}/bin/bash /etc/backup-vikunja-db.sh";
         Environment = "PATH=/run/current-system/sw/bin:/usr/bin:/bin HOME=/root";
       };
     };
@@ -147,6 +209,14 @@
       description = "Timer for the daily Immich data backup at 02:40";
       timerConfig = {
         OnCalendar = "*-*-* 02:40:00";
+        Persistent = true;
+      };
+      wantedBy = ["timers.target"];
+    };
+    backup-vikunja-db = {
+      description = "Timer for the daily Vikunja DB backup at 02:10";
+      timerConfig = {
+        OnCalendar = "*-*-* 02:10:00";
         Persistent = true;
       };
       wantedBy = ["timers.target"];
